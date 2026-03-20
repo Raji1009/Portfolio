@@ -13,49 +13,43 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="hero container">
-      <p class="tag">Portfolio</p>
-      <h1>Raji</h1>
-      <p class="subtitle">
-        Full Stack Developer (MERN) | DSA Learner | Problem Solver
-      </p>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand">Raji</a>
+        <nav class="navbar" aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#learning">Learning</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="container">
+    <main class="container page" id="home">
+      <section class="section hero-card">
+        <p class="tag">Placement-Focused Portfolio</p>
+        <h1>Raji</h1>
+        <p class="subtitle">
+          Full Stack Developer (MERN) | DSA Learner | Problem Solver
+        </p>
+        <div class="chip-row" id="keywordChips"></div>
+      </section>
+
       <section id="about" class="section">
         <h2>About</h2>
-        <p>
+        <p class="muted">
           I’m a third-year IoT engineering student passionate about building
-          impactful software solutions. My current focus is mastering the MERN
-          stack and strengthening Data Structures &amp; Algorithms to prepare for
-          software developer placements.
+          scalable web applications and strengthening core problem-solving for
+          software developer placements. I focus on MERN stack development,
+          clean backend APIs, and consistent DSA practice.
         </p>
+        <a class="btn" href="resume.pdf" download>Download Resume (PDF)</a>
       </section>
 
       <section id="skills" class="section">
         <h2>Skills</h2>
-        <div class="skill-grid">
-          <article class="skill-card">
-            <h3>Languages</h3>
-            <p>Java, JavaScript, C, SQL</p>
-          </article>
-          <article class="skill-card">
-            <h3>Frontend</h3>
-            <p>HTML, CSS, JavaScript</p>
-          </article>
-          <article class="skill-card">
-            <h3>Backend</h3>
-            <p>Node.js, Express.js</p>
-          </article>
-          <article class="skill-card">
-            <h3>Database</h3>
-            <p>MongoDB</p>
-          </article>
-          <article class="skill-card">
-            <h3>Concepts</h3>
-            <p>DSA, REST APIs</p>
-          </article>
-        </div>
+        <div id="skillsGrid" class="skill-grid"></div>
       </section>
 
       <section id="projects" class="section">
@@ -65,11 +59,7 @@
 
       <section id="learning" class="section">
         <h2>Currently Learning</h2>
-        <ul class="list">
-          <li>Advanced JavaScript (closures, scope, async)</li>
-          <li>Node.js &amp; Express deep dive</li>
-          <li>Data Structures &amp; Algorithms (LeetCode, Striver Sheet)</li>
-        </ul>
+        <ul class="list" id="learningList"></ul>
       </section>
 
       <section id="contact" class="section">
@@ -81,6 +71,14 @@
         </div>
       </section>
     </main>
+
+
+
+    <footer class="end-bar">
+      <div class="container">
+        <p>@Rajalakshmi created for placements</p>
+      </div>
+    </footer>
 
     <script src="script.js"></script>
   </body>
