@@ -1,24 +1,8 @@
-const atsKeywords = [
-  'MERN Stack',
-  'Data Structures & Algorithms',
-  'REST API Development',
-  'Problem Solving',
-  'Placement Preparation'
-];
-
-const skills = [
-  { title: 'Languages', items: 'Java, JavaScript, C, SQL' },
-  { title: 'Frontend', items: 'HTML, CSS, JavaScript' },
-  { title: 'Backend', items: 'Node.js, Express.js' },
-  { title: 'Database', items: 'MongoDB' },
-  { title: 'Concepts', items: 'DSA, REST APIs' }
-];
-
 const projects = [
   {
     title: 'MERN Stack Web Application',
     description:
-      'A full-stack application built with MongoDB, Express, React, and Node.js for real-world web workflows.',
+      'A full-stack web application built using MongoDB, Express, React, and Node.js with end-to-end functionality.',
     techStack: ['MongoDB', 'Express.js', 'React', 'Node.js'],
     features: ['Authentication', 'CRUD operations', 'REST API integration'],
     github: 'https://github.com/raji/mern-stack-web-app',
@@ -27,7 +11,7 @@ const projects = [
   {
     title: 'API-Based Application',
     description:
-      'A backend-centric application using REST APIs for business logic, server-side processing, and data handling.',
+      'A backend-focused application using REST APIs to handle business logic and efficient data flow.',
     techStack: ['Node.js', 'Express.js', 'REST APIs'],
     features: ['Server-side logic', 'Data handling'],
     github: 'https://github.com/raji/api-based-application',
@@ -35,33 +19,7 @@ const projects = [
   }
 ];
 
-const learningItems = [
-  'Advanced JavaScript (closures, scope, async)',
-  'Node.js & Express deep dive',
-  'Data Structures & Algorithms (LeetCode, Striver Sheet)'
-];
-
-function renderChips() {
-  const container = document.getElementById('keywordChips');
-  if (!container) return;
-  container.innerHTML = atsKeywords.map((chip) => `<span class="chip">${chip}</span>`).join('');
-}
-
-function renderSkills() {
-  const skillsGrid = document.getElementById('skillsGrid');
-  if (!skillsGrid) return;
-
-  skillsGrid.innerHTML = skills
-    .map(
-      (skill) => `
-      <article class="skill-card">
-        <h3>${skill.title}</h3>
-        <p>${skill.items}</p>
-      </article>
-    `
-    )
-    .join('');
-}
+const projectList = document.getElementById('projectList');
 
 function createProjectCard(project, index) {
   const card = document.createElement('article');
@@ -112,24 +70,6 @@ function createProjectCard(project, index) {
   return card;
 }
 
-function renderProjects() {
-  const projectList = document.getElementById('projectList');
-  if (!projectList) return;
-  projectList.innerHTML = '';
-
-  projects.forEach((project, index) => {
-    projectList.appendChild(createProjectCard(project, index));
-  });
-}
-
-function renderLearning() {
-  const learningList = document.getElementById('learningList');
-  if (!learningList) return;
-
-  learningList.innerHTML = learningItems.map((item) => `<li>${item}</li>`).join('');
-}
-
-renderChips();
-renderSkills();
-renderProjects();
-renderLearning();
+projects.forEach((project, index) => {
+  projectList.appendChild(createProjectCard(project, index));
+});
