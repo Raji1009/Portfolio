@@ -59,6 +59,37 @@ const projects = [
   }
 ];
 
+const recognitions = {
+  achievements: [
+    {
+      title: 'Flipkart GRID Robotics Challenge',
+      detail: 'Reached the semi-final stage with a hardware-focused solution.'
+    },
+    {
+      title: 'NASSCOM Agentic AI Program',
+      detail: 'Selected as finalist for practical AI workflow execution.'
+    },
+    {
+      title: 'Academic Project Showcases',
+      detail: 'Presented IoT + AI projects in multiple college-level reviews.'
+    }
+  ],
+  certifications: [
+    {
+      title: 'AI & Big Data in IoT',
+      detail: 'Completed specialization in data-driven IoT systems.'
+    },
+    {
+      title: 'NSIC Technical Internship',
+      detail: 'Hands-on technical training with implementation-focused tasks.'
+    },
+    {
+      title: 'Leadership Workshop',
+      detail: 'Strengthened communication, ownership, and team collaboration.'
+    }
+  ]
+};
+
 function renderChips() {
   const container = document.getElementById('keywordChips');
   if (!container) return;
@@ -119,6 +150,82 @@ function renderProjects() {
     .join('');
 }
 
+function renderRecognition(tab = 'achievements') {
+  const list = document.getElementById('achievementList');
+  if (!list) return;
+
+  const items = recognitions[tab] || [];
+  list.innerHTML = items
+    .map(
+      (item) => `
+      <article class="achieve-card reveal">
+        <h3>${item.title}</h3>
+        <p class="muted">${item.detail}</p>
+      </article>
+    `
+    )
+    .join('');
+}
+
+function setupRecognitionTabs() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((btn) => btn.classList.remove('active'));
+      tab.classList.add('active');
+      renderRecognition(tab.dataset.tab);
+      setupRevealAnimation();
+    });
+  });
+}
+
+async function renderGithubStats() {
+  const container = document.getElementById('githubStats');
+  if (!container) return;
+
+  const fallback = [
+    { label: 'Repos', value: '10+' },
+    { label: 'Followers', value: 'Growing' },
+    { label: 'Following', value: 'Developers' },
+    { label: 'Focus', value: 'Web + AI' }
+  ];
+
+  try {
+    const response = await fetch('https://api.github.com/users/Raji1009');
+    if (!response.ok) throw new Error('GitHub API unavailable');
+
+    const data = await response.json();
+    const liveStats = [
+      { label: 'Public Repos', value: data.public_repos ?? '--' },
+      { label: 'Followers', value: data.followers ?? '--' },
+      { label: 'Following', value: data.following ?? '--' },
+      { label: 'Profile', value: 'Active' }
+    ];
+
+    container.innerHTML = liveStats
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  } catch (error) {
+    container.innerHTML = fallback
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  }
+}
+
 function setupRevealAnimation() {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -138,4 +245,7 @@ renderChips();
 renderStats();
 renderSkills();
 renderProjects();
+renderRecognition();
+setupRecognitionTabs();
 setupRevealAnimation();
+renderGithubStats();

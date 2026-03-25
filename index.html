@@ -23,6 +23,8 @@
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
+          <a href="#stats">Coding Stats</a>
+          <a href="#achievements">Achievements</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
@@ -73,6 +75,35 @@
         <h2>Featured Projects</h2>
         <p class="section-subtitle">A few things I have built recently.</p>
         <div id="projectList" class="project-grid"></div>
+      </section>
+
+      <section id="stats" class="section glass">
+        <h2>GitHub & LeetCode Stats</h2>
+        <p class="section-subtitle">A quick snapshot of my coding consistency and open-source presence.</p>
+        <div class="coding-grid">
+          <article class="code-card reveal">
+            <h3>GitHub Snapshot</h3>
+            <div class="metric-grid" id="githubStats"></div>
+            <a class="btn" href="https://github.com/Raji1009" target="_blank" rel="noreferrer">Visit GitHub</a>
+          </article>
+          <article class="code-card reveal">
+            <h3>LeetCode Progress</h3>
+            <p class="muted">Consistent DSA practice for interview readiness.</p>
+            <div class="leetcode-box">
+              <p><strong>Profile:</strong> <a href="https://leetcode.com/" target="_blank" rel="noreferrer">Open LeetCode</a></p>
+              <p id="leetcodeMeta" class="muted">Actively solving algorithmic questions weekly.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="achievements" class="section glass">
+        <h2>Achievements & Certifications</h2>
+        <div class="tab-row">
+          <button class="tab-btn active" data-tab="achievements">Achievements</button>
+          <button class="tab-btn" data-tab="certifications">Certifications</button>
+        </div>
+        <div id="achievementList" class="achieve-list"></div>
       </section>
 
       <section id="contact" class="section glass contact-card">

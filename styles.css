@@ -69,6 +69,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.9rem 0;
+  gap: 0.5rem;
 }
 
 .brand {
@@ -206,54 +207,59 @@ h2 {
   font-size: 1.45rem;
 }
 
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.7rem;
-}
-
-.stat-card {
-  border: 1px solid var(--line);
-  background: var(--surface-strong);
-  border-radius: 14px;
-  padding: 0.9rem;
-}
-
-.stat-value {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
+.stat-grid,
 .skill-grid,
-.project-grid {
+.project-grid,
+.achieve-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.8rem;
 }
 
+.stat-card,
 .skill-card,
-.project-card {
+.project-card,
+.achieve-card,
+.code-card,
+.metric-card {
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0.95rem;
   background: var(--surface-strong);
+}
+
+.skill-card,
+.project-card,
+.achieve-card,
+.code-card {
   transition: transform 200ms ease, border-color 200ms ease;
 }
 
 .skill-card:hover,
-.project-card:hover {
+.project-card:hover,
+.achieve-card:hover,
+.code-card:hover {
   transform: translateY(-4px);
   border-color: rgba(110, 231, 255, 0.4);
 }
 
 .skill-card h3,
-.project-card h3 {
+.project-card h3,
+.achieve-card h3,
+.code-card h3 {
   margin: 0 0 0.35rem;
+}
+
+.stat-value,
+.metric-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.stat-label,
+.metric-label {
+  color: var(--muted);
+  font-size: 0.84rem;
 }
 
 .project-tech {
@@ -269,6 +275,45 @@ h2 {
   padding: 0.2rem 0.55rem;
   font-size: 0.75rem;
   color: #bfdbfe;
+}
+
+.coding-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0.7rem 0 0.9rem;
+}
+
+.leetcode-box a {
+  color: var(--accent);
+}
+
+.tab-row {
+  display: flex;
+  gap: 0.55rem;
+  margin-bottom: 0.8rem;
+}
+
+.tab-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.38rem 0.9rem;
+  background: rgba(15, 23, 42, 0.7);
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  color: var(--text);
+  border-color: rgba(110, 231, 255, 0.5);
+  background: rgba(110, 231, 255, 0.15);
 }
 
 .contact-card {
@@ -312,13 +357,21 @@ h2 {
   transform: translateY(0);
 }
 
-@media (max-width: 840px) {
+@media (max-width: 900px) {
   .split,
   .skill-grid,
-  .project-grid {
+  .project-grid,
+  .coding-grid,
+  .achieve-list {
     grid-template-columns: 1fr;
   }
 
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
   .nav-wrap {
     flex-direction: column;
     align-items: flex-start;
