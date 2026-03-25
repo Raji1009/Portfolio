@@ -19,7 +19,10 @@ export default function App() {
   const [githubStats, setGithubStats] = useState(null);
   const [leetStats, setLeetStats] = useState(null);
   const [repoTotals, setRepoTotals] = useState({ stars: 0, forks: 0 });
+  const [githubContributions, setGithubContributions] = useState('--');
   const [recentCommits, setRecentCommits] = useState('--');
+  const [activeProject, setActiveProject] = useState(0);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -28,7 +31,13 @@ export default function App() {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const githubResponse = await fetch('https://api.github.com/users/Raji1009');
+        const [githubResponse, reposResponse, eventsResponse, contributionResponse] = await Promise.all([
+          fetch('https://api.github.com/users/Raji1009'),
+          fetch('https://api.github.com/users/Raji1009/repos?per_page=100'),
+          fetch('https://api.github.com/users/Raji1009/events/public?per_page=100'),
+          fetch('https://github-contributions-api.jogruber.de/v4/Raji1009?y=last').catch(() => null)
+        ]);
+
         const githubData = await githubResponse.json();
         if (githubData?.message) {
           throw new Error(githubData.message);
@@ -36,21 +45,23 @@ export default function App() {
 
         setGithubStats(githubData);
 
-        const reposResponse = await fetch('https://api.github.com/users/Raji1009/repos?per_page=100');
         const reposData = await reposResponse.json();
-
         if (Array.isArray(reposData)) {
           const stars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
           const forks = reposData.reduce((sum, repo) => sum + (repo.forks_count || 0), 0);
           setRepoTotals({ stars, forks });
         }
 
-        const eventsResponse = await fetch('https://api.github.com/users/Raji1009/events/public?per_page=100');
         const eventsData = await eventsResponse.json();
         if (Array.isArray(eventsData)) {
           const pushEvents = eventsData.filter((event) => event.type === 'PushEvent');
           const commitCount = pushEvents.reduce((sum, event) => sum + (event.payload?.commits?.length || 0), 0);
           setRecentCommits(commitCount);
+        }
+
+        if (contributionResponse?.ok) {
+          const contributionData = await contributionResponse.json();
+          setGithubContributions(contributionData?.total?.[2025] || contributionData?.total?.[2024] || '--');
         }
       } catch {
         setGithubStats(null);
@@ -82,6 +93,17 @@ export default function App() {
     () => 'https://github-readme-streak-stats.herokuapp.com?user=Raji1009&theme=github-dark&hide_border=true',
     []
   );
+
+  const currentProject = projects[activeProject];
+
+  const handleContactSubmit = (event) => {
+    event.preventDefault();
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:lavanis7u@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   return (
     <div
@@ -153,26 +175,51 @@ export default function App() {
 
         <motion.section id="projects" {...fadeUp}>
           <h2 className="mb-4 text-2xl font-bold">Projects</h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {projects.map((project) => (
-              <Card key={project.title}>
-                <img src={project.image} alt={project.title} loading="lazy" className="h-44 w-full rounded-xl object-cover" />
-                <h3 className="mt-4 text-xl font-semibold text-slate-100">{project.title}</h3>
-                <p className="mt-2 text-sm text-slate-400">{project.description}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.stack.map((tech) => (
-                    <span key={tech} className="rounded-full border border-slate-700 px-2.5 py-1 text-xs text-slate-300">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4 flex gap-3 text-sm">
-                  <a className="text-cyan-300 hover:text-cyan-200" href={project.github} target="_blank" rel="noreferrer">GitHub</a>
-                  <a className="text-violet-300 hover:text-violet-200" href={project.demo} target="_blank" rel="noreferrer">Live Demo</a>
-                </div>
-              </Card>
-            ))}
-          </div>
+          <Card className="overflow-hidden">
+            <motion.div
+              key={currentProject.title}
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.45 }}
+            >
+              <img
+                src={currentProject.image}
+                alt={currentProject.title}
+                loading="lazy"
+                className="h-52 w-full rounded-xl object-cover"
+              />
+              <h3 className="mt-4 text-xl font-semibold text-slate-100">{currentProject.title}</h3>
+              <p className="mt-2 text-sm text-slate-400">{currentProject.description}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {currentProject.stack.map((tech) => (
+                  <span key={tech} className="rounded-full border border-slate-700 px-2.5 py-1 text-xs text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <a className="text-cyan-300 hover:text-cyan-200" href={currentProject.github} target="_blank" rel="noreferrer">GitHub</a>
+                <a className="text-violet-300 hover:text-violet-200" href={currentProject.demo} target="_blank" rel="noreferrer">Live Demo</a>
+              </div>
+            </motion.div>
+            <div className="mt-6 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
+                onClick={() => setActiveProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1))}
+              >
+                Previous
+              </button>
+              <p className="text-xs text-slate-400">Project {activeProject + 1} of {projects.length}</p>
+              <button
+                type="button"
+                className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
+                onClick={() => setActiveProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1))}
+              >
+                Next
+              </button>
+            </div>
+          </Card>
         </motion.section>
 
         <motion.section id="stats" {...fadeUp}>
@@ -190,12 +237,22 @@ export default function App() {
                   <StatsCard label="Recent Commits (100 events)" value={recentCommits} />
                   <StatsCard label="Total Stars" value={repoTotals.stars} />
                   <StatsCard label="Public Repos" value={githubStats?.public_repos ?? '--'} />
-                  <StatsCard label="Total Forks" value={repoTotals.forks} />
+                  <StatsCard label="Contributions (last year)" value={githubContributions} />
                 </div>
               )}
               <div className="mt-4 grid gap-3">
                 <img src={githubApiImage} loading="lazy" alt="GitHub Readme Stats" className="w-full rounded-xl border border-slate-800" />
                 <img src={streakImage} loading="lazy" alt="GitHub Streak Stats" className="w-full rounded-xl border border-slate-800" />
+              </div>
+              <div className="mt-4">
+                <a
+                  href="https://github.com/Raji1009"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg border border-cyan-400/40 px-3 py-2 text-sm text-cyan-300 hover:bg-cyan-500/10"
+                >
+                  Open GitHub Profile
+                </a>
               </div>
             </Card>
 
@@ -211,33 +268,72 @@ export default function App() {
                   <StatsCard label="Total Solved" value={leetStats?.totalSolved ?? '--'} />
                   <StatsCard label="Easy / Medium / Hard" value={`${leetStats?.easySolved ?? '--'} / ${leetStats?.mediumSolved ?? '--'} / ${leetStats?.hardSolved ?? '--'}`} />
                   <StatsCard label="Acceptance Rate" value={leetStats?.acceptanceRate ? `${leetStats.acceptanceRate}%` : '--'} />
-                  <StatsCard label="Ranking" value={leetStats?.ranking ?? '--'} />
+                  <StatsCard label="Contribution Points" value={leetStats?.contributionPoints ?? '--'} />
                 </div>
               )}
+              <div className="mt-4">
+                <a
+                  href="https://leetcode.com/Raji1009/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg border border-violet-400/40 px-3 py-2 text-sm text-violet-300 hover:bg-violet-500/10"
+                >
+                  Open LeetCode Profile
+                </a>
+              </div>
             </Card>
           </div>
         </motion.section>
 
         <motion.section id="timeline" {...fadeUp}>
           <h2 className="mb-4 text-2xl font-bold">Timeline</h2>
-          <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-            {timeline.map((item) => (
-              <div key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+          <div className="relative space-y-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+            <div className="absolute bottom-8 left-8 top-8 w-px bg-gradient-to-b from-cyan-400/80 via-violet-400/50 to-transparent" />
+            {timeline.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -28 : 28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.45 }}
+                transition={{ duration: 0.45 }}
+                className="relative ml-14 rounded-xl border border-slate-800 bg-slate-950/70 p-4"
+              >
+                <span className="absolute -left-[41px] top-5 h-3.5 w-3.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(34,211,238,0.7)]" />
                 <p className="text-xs uppercase tracking-wide text-cyan-300">{item.type}</p>
                 <h3 className="mt-1 font-semibold">{item.title}</h3>
                 <p className="text-sm text-slate-400">{item.detail}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>
 
         <motion.section id="contact" {...fadeUp} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
           <h2 className="text-2xl font-bold">Contact</h2>
-          <form className="mt-4 grid gap-3 md:grid-cols-2">
-            <input className="rounded-lg border border-slate-700 bg-slate-950 p-3" placeholder="Your Name" />
-            <input className="rounded-lg border border-slate-700 bg-slate-950 p-3" placeholder="Your Email" type="email" />
-            <textarea className="md:col-span-2 rounded-lg border border-slate-700 bg-slate-950 p-3" rows="4" placeholder="Message" />
-            <button type="button" className="md:col-span-2 rounded-lg bg-cyan-600/20 px-4 py-2 text-cyan-200 hover:bg-cyan-600/30">
+          <form onSubmit={handleContactSubmit} className="mt-4 grid gap-3 md:grid-cols-2">
+            <input
+              className="rounded-lg border border-slate-700 bg-slate-950 p-3"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+              required
+            />
+            <input
+              className="rounded-lg border border-slate-700 bg-slate-950 p-3"
+              placeholder="Your Email"
+              type="email"
+              value={formData.email}
+              onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+              required
+            />
+            <textarea
+              className="md:col-span-2 rounded-lg border border-slate-700 bg-slate-950 p-3"
+              rows="4"
+              placeholder="Message"
+              value={formData.message}
+              onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
+              required
+            />
+            <button type="submit" className="md:col-span-2 rounded-lg bg-cyan-600/20 px-4 py-2 text-cyan-200 hover:bg-cyan-600/30">
               Send Message
             </button>
           </form>
