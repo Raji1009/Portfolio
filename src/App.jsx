@@ -18,6 +18,8 @@ export default function App() {
   const [leetLoading, setLeetLoading] = useState(true);
   const [githubStats, setGithubStats] = useState(null);
   const [leetStats, setLeetStats] = useState(null);
+  const [repoTotals, setRepoTotals] = useState({ stars: 0, forks: 0 });
+  const [recentCommits, setRecentCommits] = useState('--');
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -28,7 +30,28 @@ export default function App() {
       try {
         const githubResponse = await fetch('https://api.github.com/users/Raji1009');
         const githubData = await githubResponse.json();
+        if (githubData?.message) {
+          throw new Error(githubData.message);
+        }
+
         setGithubStats(githubData);
+
+        const reposResponse = await fetch('https://api.github.com/users/Raji1009/repos?per_page=100');
+        const reposData = await reposResponse.json();
+
+        if (Array.isArray(reposData)) {
+          const stars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+          const forks = reposData.reduce((sum, repo) => sum + (repo.forks_count || 0), 0);
+          setRepoTotals({ stars, forks });
+        }
+
+        const eventsResponse = await fetch('https://api.github.com/users/Raji1009/events/public?per_page=100');
+        const eventsData = await eventsResponse.json();
+        if (Array.isArray(eventsData)) {
+          const pushEvents = eventsData.filter((event) => event.type === 'PushEvent');
+          const commitCount = pushEvents.reduce((sum, event) => sum + (event.payload?.commits?.length || 0), 0);
+          setRecentCommits(commitCount);
+        }
       } catch {
         setGithubStats(null);
       } finally {
@@ -61,19 +84,48 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 bg-grid bg-[length:28px_28px] text-slate-100">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.16),_transparent_44%),radial-gradient(circle_at_bottom_right,_rgba(139,92,246,0.16),_transparent_40%)]" />
+    <div
+      className={`min-h-screen bg-grid bg-[length:28px_28px] ${
+        dark ? 'bg-slate-950 text-slate-100' : 'bg-slate-100 text-slate-900'
+      }`}
+    >
+      <div
+        className={`pointer-events-none fixed inset-0 ${
+          dark
+            ? 'bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.16),_transparent_44%),radial-gradient(circle_at_bottom_right,_rgba(139,92,246,0.16),_transparent_40%)]'
+            : 'bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.14),_transparent_48%),radial-gradient(circle_at_bottom_right,_rgba(124,58,237,0.14),_transparent_45%)]'
+        }`}
+      />
       <Navbar dark={dark} onToggleTheme={() => setDark((prev) => !prev)} />
 
       <main id="home" className="relative mx-auto flex w-[min(1120px,92vw)] flex-col gap-6 py-8">
-        <motion.section {...fadeUp} className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-glow">
-          <p className="text-sm font-medium text-cyan-300">Frontend-first, placement-focused</p>
+        <motion.section
+          {...fadeUp}
+          className={`rounded-3xl border p-8 shadow-glow ${
+            dark ? 'border-slate-800 bg-slate-900/70' : 'border-slate-300 bg-white/80'
+          }`}
+        >
+          <p className={`text-sm font-medium ${dark ? 'text-cyan-300' : 'text-cyan-700'}`}>Frontend-first, placement-focused</p>
           <h1 className="mt-2 text-3xl font-extrabold leading-tight md:text-5xl">{profile.name}</h1>
-          <p className="mt-3 text-lg text-slate-300">{profile.role}</p>
-          <p className="mt-4 max-w-3xl text-slate-400">{profile.intro}</p>
+          <p className={`mt-3 text-lg ${dark ? 'text-slate-300' : 'text-slate-700'}`}>{profile.role}</p>
+          <p className={`mt-4 max-w-3xl ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{profile.intro}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href="#projects" className="rounded-lg bg-cyan-500/20 px-4 py-2 text-cyan-200 hover:bg-cyan-500/30">View Projects</a>
-            <a href="#contact" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800">Contact</a>
+            <a
+              href="#projects"
+              className={`rounded-lg px-4 py-2 ${
+                dark ? 'bg-cyan-500/20 text-cyan-200 hover:bg-cyan-500/30' : 'bg-cyan-100 text-cyan-800 hover:bg-cyan-200'
+              }`}
+            >
+              View Projects
+            </a>
+            <a
+              href="#contact"
+              className={`rounded-lg border px-4 py-2 ${
+                dark ? 'border-slate-700 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              Contact
+            </a>
           </div>
         </motion.section>
 
@@ -135,10 +187,10 @@ export default function App() {
                 </div>
               ) : (
                 <div className="grid gap-3 sm:grid-cols-2">
+                  <StatsCard label="Recent Commits (100 events)" value={recentCommits} />
+                  <StatsCard label="Total Stars" value={repoTotals.stars} />
                   <StatsCard label="Public Repos" value={githubStats?.public_repos ?? '--'} />
-                  <StatsCard label="Followers" value={githubStats?.followers ?? '--'} />
-                  <StatsCard label="Following" value={githubStats?.following ?? '--'} />
-                  <StatsCard label="Contributions" value="See graphs below" />
+                  <StatsCard label="Total Forks" value={repoTotals.forks} />
                 </div>
               )}
               <div className="mt-4 grid gap-3">
@@ -166,7 +218,7 @@ export default function App() {
           </div>
         </motion.section>
 
-        <motion.section {...fadeUp}>
+        <motion.section id="timeline" {...fadeUp}>
           <h2 className="mb-4 text-2xl font-bold">Timeline</h2>
           <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             {timeline.map((item) => (
