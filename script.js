@@ -1,36 +1,34 @@
 const atsKeywords = [
   'Full Stack Development',
-  'IoT Systems',
-  'Machine Learning',
-  'Data Structures & Algorithms',
-  'Problem Solving'
+  'IoT + AI Prototyping',
+  'REST API Integration',
+  'Problem Solving',
+  'Performance-focused UI'
+];
+
+const stats = [
+  { value: '5+', label: 'Portfolio Projects' },
+  { value: '3', label: 'Domains (Web/IoT/AI)' },
+  { value: '150+', label: 'DSA Problems Practiced' },
+  { value: '100%', label: 'Hands-on Learning Mindset' }
 ];
 
 const skills = [
   {
-    title: 'Languages',
-    items:
-      'Java, JavaScript, C, SQL with strong foundation in OOP and problem-solving'
+    title: 'Frontend Development',
+    items: 'HTML, CSS, JavaScript, responsive layouts, and smooth UI interactions'
   },
   {
-    title: 'Frontend',
-    items:
-      'Building responsive UI using HTML, CSS, JavaScript with focus on UX and performance'
-  },
-  {
-    title: 'Backend',
-    items:
-      'Node.js and Express.js for scalable server-side development and REST APIs'
+    title: 'Backend & APIs',
+    items: 'Node.js, Express.js, REST APIs, and modular server architecture'
   },
   {
     title: 'Database',
-    items:
-      'MongoDB for schema design, efficient data handling, and CRUD operations'
+    items: 'MongoDB and SQL for schema design, data retrieval, and optimization'
   },
   {
-    title: 'Concepts',
-    items:
-      'DSA, REST APIs, and core software engineering principles'
+    title: 'Core CS',
+    items: 'Data Structures, Algorithms, OOP, and scalable problem-solving patterns'
   }
 ];
 
@@ -229,9 +227,11 @@ function createProjectCard(project, index) {
           ${project.paper ? `<a class="btn" href="${project.paper}" target="_blank" rel="noreferrer">Research Paper</a>` : ''}
           <button class="btn btn-secondary share-btn" data-title="${project.title}">Copy Title</button>
         </div>
-      </div>
-    </div>
-  `;
+      </article>
+    `
+    )
+    .join('');
+}
 
   const toggle = card.querySelector('.project-toggle');
   toggle.addEventListener('click', () => {
@@ -242,11 +242,6 @@ function createProjectCard(project, index) {
       const projectToggle = projectCard.querySelector('.project-toggle');
       if (projectToggle) projectToggle.setAttribute('aria-expanded', 'false');
     });
-
-    if (!isExpanded) {
-      card.classList.add('expanded');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
   });
 
   const shareBtn = card.querySelector('.share-btn');
