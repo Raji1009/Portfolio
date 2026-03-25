@@ -1,6 +1,3 @@
-// =====================
-// ATS KEYWORDS
-// =====================
 const atsKeywords = [
   'Full Stack Development',
   'IoT Systems',
@@ -9,9 +6,6 @@ const atsKeywords = [
   'Problem Solving'
 ];
 
-// =====================
-// SKILLS
-// =====================
 const skills = [
   {
     title: 'Languages',
@@ -40,81 +34,110 @@ const skills = [
   }
 ];
 
-// =====================
-// PROJECTS
-// =====================
 const projects = [
   {
     title: 'AI-Based Mental Health Monitoring Band (Swaas)',
     description:
-      'A wearable IoT system enhanced with AI to analyze physiological signals and detect stress levels. Supported by an IEEE research paper.',
-    techStack: ['IoT', 'Sensors', 'Embedded Systems', 'AI'],
+      'Designed and developed a wearable IoT system that continuously monitors physiological signals and uses AI models to detect stress patterns in real time. Published as an IEEE-supported research work.',
+    techStack: ['IoT', 'Embedded Systems', 'Sensors', 'Python', 'Machine Learning'],
     features: [
-      'Real-time physiological monitoring',
-      'AI-based stress detection',
-      'Wearable integration'
+      'Real-time acquisition of physiological signals (heart rate, temperature)',
+      'AI-based stress detection using trained ML models',
+      'Low-power wearable device integration',
+      'Research-backed system with documented results'
     ],
-    github: '',
-    demo: '',
-    paper: 'YOUR_DRIVE_LINK'
+    github: 'https://github.com/Raji1009/Swaas',
+    demo: 'https://swaasband.vercel.app/#/',
+    paper: 'https://drive.google.com/file/d/19VwWmrkN8FeD2shPLhYuYgnJzlZb4-m4/view?usp=sharing'
   },
   {
-    title: 'Spotify Clone',
+    title: 'AI-Driven ESG Scoring and Sustainability Analytics Platform',
     description:
-      'A responsive front-end music player inspired by Spotify focusing on UI/UX and interactivity.',
-    techStack: ['HTML', 'CSS', 'JavaScript'],
+      'Built a data-driven platform that evaluates companies based on ESG metrics using analytics and machine learning to generate sustainability scores and insights.',
+    techStack: ['Python', 'Machine Learning', 'Data Analytics', 'JavaScript', 'Dashboard UI'],
     features: [
-      'Music player UI',
-      'Responsive design',
-      'Interactive controls'
+      'Automated ESG score calculation using weighted metrics',
+      'Data preprocessing and normalization pipeline',
+      'Interactive dashboard for sustainability insights',
+      'Company risk analysis based on ESG indicators'
     ],
-    github: '',
-    demo: ''
-  },
-  {
-    title: 'JavaScript Color Game',
-    description:
-      'An interactive browser game where users guess colors using RGB values.',
-    techStack: ['HTML', 'CSS', 'JavaScript'],
-    features: [
-      'Dynamic color generation',
-      'Difficulty levels',
-      'DOM manipulation'
-    ],
-    github: '',
-    demo: ''
+    github: 'https://github.com/Raji1009/ESG-Scoring-App/tree/codex/find-deployment-options-for-app',
+    demo: 'https://esg-scoring-app.onrender.com/'
   },
   {
     title: 'IoT-Based Poultry Disease Detection System',
     description:
-      'Monitors poultry farm conditions and detects disease using sensor data and ML.',
-    techStack: ['IoT Sensors', 'Arduino', 'Cloud', 'Machine Learning'],
+      'Developed an IoT-enabled monitoring system that collects environmental data from poultry farms and applies anomaly detection techniques to identify early signs of disease.',
+    techStack: ['IoT Sensors', 'Arduino', 'Cloud Integration', 'Machine Learning'],
     features: [
-      'Real-time monitoring',
-      'Anomaly detection',
-      'Alert system'
+      'Real-time environmental monitoring (temperature, humidity)',
+      'Anomaly detection using ML models',
+      'Cloud-based data storage and processing',
+      'Automated alert system for early disease detection'
     ],
     github: '',
     demo: ''
   },
   {
+    title: 'Smart Expense Tracker with Predictive Analytics',
+    description:
+      'Developed an intelligent expense tracking system that analyzes user spending patterns and offers predictive budgeting insights.',
+    techStack: ['JavaScript', 'Node.js', 'Express', 'MongoDB', 'Chart.js'],
+    features: [
+      'Automated expense categorization using rule-based logic',
+      'Real-time tracking and visualization of spending patterns',
+      'Monthly budget planning with overspending alerts',
+      'Predictive analysis of future expenses from historical data',
+      'Interactive dashboard with charts and summaries',
+      'Secure user authentication and data management'
+    ],
+    github: 'https://github.com/Raji1009/Smart-Expense-Tracker',
+    demo: 'https://raji1009.github.io/Smart-Expense-Tracker/'
+  },
+  {
     title: 'ML-Based Elder Diabetic Monitoring System',
     description:
-      'A machine learning system that predicts diabetic risks in elderly individuals.',
-    techStack: ['Python', 'Machine Learning'],
+      'Implemented a machine learning model to predict diabetic risk in elderly individuals using health parameters for early intervention.',
+    techStack: ['Python', 'Machine Learning', 'Data Preprocessing'],
     features: [
-      'Data preprocessing',
-      'Prediction model',
-      'Health insights'
+      'Data cleaning and preprocessing pipeline',
+      'Predictive model for diabetes risk classification',
+      'Feature selection for improved accuracy',
+      'Health insights generation for preventive care'
     ],
     github: '',
     demo: ''
+  },
+  {
+    title: 'Spotify Clone (Frontend Music Player)',
+    description:
+      'Built a responsive and interactive music player inspired by Spotify, focused on UI/UX and smooth DOM interaction.',
+    techStack: ['HTML', 'CSS', 'JavaScript'],
+    features: [
+      'Custom player controls with progress interactions',
+      'Responsive UI design across devices',
+      'Dynamic playlist handling via DOM updates',
+      'Smooth interactions and transitions'
+    ],
+    github: 'https://github.com/Raji1009/Spotify_clone',
+    demo: 'https://raji1009.github.io/Spotify_clone/'
+  },
+  {
+    title: 'JavaScript Color Game',
+    description:
+      'Interactive browser game challenging users to match RGB values with colors.',
+    techStack: ['HTML', 'CSS', 'JavaScript'],
+    features: [
+      'Dynamic RGB color generation logic',
+      'Multiple difficulty levels (Easy/Hard)',
+      'Interactive UI with real-time feedback',
+      'Efficient DOM updates and event handling'
+    ],
+    github: 'https://github.com/Raji1009/Simon-Game.git',
+    demo: 'https://raji1009.github.io/Simon-Game/'
   }
 ];
 
-// =====================
-// LEARNING
-// =====================
 const learningItems = [
   'Advanced JavaScript (Closures, Async, Scope)',
   'Node.js & Express Deep Dive',
@@ -122,21 +145,33 @@ const learningItems = [
   'System Design Basics'
 ];
 
-// =====================
-// RENDER FUNCTIONS
-// =====================
+const overviewStats = [
+  { value: '7', label: 'Featured Projects' },
+  { value: '5+', label: 'Core Domains' },
+  { value: '150+', label: 'DSA Problems' },
+  { value: '24/7', label: 'Learning Mindset' }
+];
 
-// ATS Chips
+const recognitions = {
+  achievements: [
+    { title: 'Flipkart GRID Robotics Challenge', detail: 'Reached semi-finals with embedded innovation.' },
+    { title: 'NASSCOM Agentic AI Program', detail: 'Finalist for practical AI workflow execution.' },
+    { title: 'IEEE-Supported Research', detail: 'Published work related to AI-powered wearable monitoring.' }
+  ],
+  certifications: [
+    { title: 'AI & Big Data in IoT', detail: 'Completed specialization for data-driven IoT systems.' },
+    { title: 'NSIC Technical Internship', detail: 'Hands-on delivery with implementation-focused tasks.' },
+    { title: 'Leadership Workshop', detail: 'Training in communication, collaboration, and ownership.' }
+  ]
+};
+
 function renderChips() {
   const container = document.getElementById('keywordChips');
   if (!container) return;
 
-  container.innerHTML = atsKeywords
-    .map((chip) => `<span class="chip">${chip}</span>`)
-    .join('');
+  container.innerHTML = atsKeywords.map((chip) => `<span class="chip">${chip}</span>`).join('');
 }
 
-// Skills
 function renderSkills() {
   const grid = document.getElementById('skillsGrid');
   if (!grid) return;
@@ -144,70 +179,68 @@ function renderSkills() {
   grid.innerHTML = skills
     .map(
       (skill) => `
-      <article class="skill-card">
+      <article class="skill-card reveal">
         <h3>${skill.title}</h3>
-        <p>${skill.items}</p>
+        <p class="muted">${skill.items}</p>
       </article>
     `
     )
     .join('');
 }
 
-// Create Project Card
+function renderOverviewStats() {
+  const grid = document.getElementById('statsGrid');
+  if (!grid) return;
+
+  grid.innerHTML = overviewStats
+    .map(
+      (stat) => `
+      <article class="stat-card reveal">
+        <div class="stat-value">${stat.value}</div>
+        <div class="stat-label">${stat.label}</div>
+      </article>
+    `
+    )
+    .join('');
+}
+
 function createProjectCard(project, index) {
   const card = document.createElement('article');
-  card.className = 'project-card';
-
+  card.className = 'project-card reveal';
   const contentId = `project-${index}`;
 
   card.innerHTML = `
     <button class="project-toggle" aria-expanded="false" aria-controls="${contentId}">
-      <span class="project-title">
-        ${project.title} ${project.paper ? '🏆' : ''}
-      </span>
+      <span class="project-title">${project.title} ${project.paper ? '🏆' : ''}</span>
       <span class="chevron">⌄</span>
     </button>
 
     <div id="${contentId}" class="project-content">
       <div class="project-inner">
-        <p>${project.description}</p>
-
+        <p class="muted">${project.description}</p>
         <p><strong>Tech Stack:</strong> ${project.techStack.join(', ')}</p>
-
         <p><strong>Key Features:</strong></p>
         <ul>
-          ${project.features.map((f) => `<li>${f}</li>`).join('')}
+          ${project.features.map((feature) => `<li>${feature}</li>`).join('')}
         </ul>
-
         <div class="btn-row">
-          ${
-            project.github
-              ? `<a class="btn" href="${project.github}" target="_blank">GitHub</a>`
-              : ''
-          }
-          ${
-            project.demo
-              ? `<a class="btn" href="${project.demo}" target="_blank">Live Demo</a>`
-              : ''
-          }
-          ${
-            project.paper
-              ? `<a class="btn" href="${project.paper}" target="_blank">Research Paper</a>`
-              : ''
-          }
+          ${project.github ? `<a class="btn" href="${project.github}" target="_blank" rel="noreferrer">GitHub</a>` : ''}
+          ${project.demo ? `<a class="btn" href="${project.demo}" target="_blank" rel="noreferrer">Live Demo</a>` : ''}
+          ${project.paper ? `<a class="btn" href="${project.paper}" target="_blank" rel="noreferrer">Research Paper</a>` : ''}
+          <button class="btn btn-secondary share-btn" data-title="${project.title}">Copy Title</button>
         </div>
       </div>
     </div>
   `;
 
   const toggle = card.querySelector('.project-toggle');
-
   toggle.addEventListener('click', () => {
     const isExpanded = card.classList.contains('expanded');
 
-    document.querySelectorAll('.project-card').forEach((c) => {
-      c.classList.remove('expanded');
-      c.querySelector('.project-toggle').setAttribute('aria-expanded', 'false');
+    document.querySelectorAll('.project-card').forEach((projectCard) => {
+      projectCard.classList.remove('expanded');
+      const projectToggle = projectCard.querySelector('.project-toggle');
+      if (projectToggle) projectToggle.setAttribute('aria-expanded', 'false');
     });
 
     if (!isExpanded) {
@@ -216,55 +249,157 @@ function createProjectCard(project, index) {
     }
   });
 
+  const shareBtn = card.querySelector('.share-btn');
+  shareBtn.addEventListener('click', async () => {
+    const text = `${project.title} - Rajalakshmi R Portfolio`;
+    try {
+      await navigator.clipboard.writeText(text);
+      shareBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        shareBtn.textContent = 'Copy Title';
+      }, 1000);
+    } catch (error) {
+      shareBtn.textContent = 'Copy Failed';
+    }
+  });
+
   return card;
 }
 
-// Projects
-function renderProjects() {
+function renderProjects(projectData = projects) {
   const list = document.getElementById('projectList');
+  const counter = document.getElementById('projectCount');
   if (!list) return;
 
   list.innerHTML = '';
-  projects.forEach((p, i) => {
-    list.appendChild(createProjectCard(p, i));
+  projectData.forEach((project, index) => list.appendChild(createProjectCard(project, index)));
+  if (counter) counter.textContent = `${projectData.length} project${projectData.length === 1 ? '' : 's'}`;
+}
+
+function setupProjectSearch() {
+  const search = document.getElementById('projectSearch');
+  if (!search) return;
+
+  search.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase().trim();
+    if (!query) {
+      renderProjects(projects);
+      setupRevealAnimation();
+      return;
+    }
+
+    const filtered = projects.filter((project) => {
+      const blob = `${project.title} ${project.description} ${project.techStack.join(' ')}`.toLowerCase();
+      return blob.includes(query);
+    });
+
+    renderProjects(filtered);
+    setupRevealAnimation();
   });
 }
 
-// Learning
 function renderLearning() {
   const list = document.getElementById('learningList');
   if (!list) return;
 
-  list.innerHTML = learningItems
-    .map((item) => `<li>${item}</li>`)
+  list.innerHTML = learningItems.map((item) => `<li>${item}</li>`).join('');
+}
+
+function renderRecognition(tab = 'achievements') {
+  const container = document.getElementById('achievementList');
+  if (!container) return;
+
+  container.innerHTML = recognitions[tab]
+    .map(
+      (entry) => `
+      <article class="achieve-card reveal">
+        <h3>${entry.title}</h3>
+        <p class="muted">${entry.detail}</p>
+      </article>
+    `
+    )
     .join('');
 }
 
-// =====================
-// SCROLL ANIMATION
-// =====================
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
-      }
+function setupRecognitionTabs() {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      tabButtons.forEach((tab) => tab.classList.remove('active'));
+      button.classList.add('active');
+      renderRecognition(button.dataset.tab);
+      setupRevealAnimation();
     });
-  },
-  { threshold: 0.1 }
-);
+  });
+}
 
-document.querySelectorAll('.section').forEach((section) => {
-  section.style.opacity = 0;
-  section.style.transform = 'translateY(20px)';
-  observer.observe(section);
-});
+async function renderGithubStats() {
+  const container = document.getElementById('githubStats');
+  if (!container) return;
 
-// =====================
-// INIT
-// =====================
+  const fallback = [
+    { label: 'Public Repos', value: '10+' },
+    { label: 'Followers', value: 'Growing' },
+    { label: 'Following', value: 'Active' },
+    { label: 'Profile', value: 'Raji1009' }
+  ];
+
+  try {
+    const response = await fetch('https://api.github.com/users/Raji1009');
+    if (!response.ok) throw new Error('GitHub API unavailable');
+    const data = await response.json();
+
+    const cards = [
+      { label: 'Public Repos', value: data.public_repos ?? '--' },
+      { label: 'Followers', value: data.followers ?? '--' },
+      { label: 'Following', value: data.following ?? '--' },
+      { label: 'Profile', value: 'Live' }
+    ];
+
+    container.innerHTML = cards
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  } catch (error) {
+    container.innerHTML = fallback
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  }
+}
+
+function setupRevealAnimation() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.section, .reveal').forEach((element) => observer.observe(element));
+}
+
 renderChips();
+renderOverviewStats();
 renderSkills();
 renderProjects();
+setupProjectSearch();
 renderLearning();
+renderRecognition();
+setupRecognitionTabs();
+setupRevealAnimation();
+renderGithubStats();
