@@ -1,132 +1,95 @@
-// =====================
-// ATS KEYWORDS
-// =====================
 const atsKeywords = [
   'Full Stack Development',
-  'IoT Systems',
-  'Machine Learning',
-  'Data Structures & Algorithms',
-  'Problem Solving'
+  'IoT + AI Prototyping',
+  'REST API Integration',
+  'Problem Solving',
+  'Performance-focused UI'
 ];
 
-// =====================
-// SKILLS
-// =====================
+const stats = [
+  { value: '5+', label: 'Portfolio Projects' },
+  { value: '3', label: 'Domains (Web/IoT/AI)' },
+  { value: '150+', label: 'DSA Problems Practiced' },
+  { value: '100%', label: 'Hands-on Learning Mindset' }
+];
+
 const skills = [
   {
-    title: 'Languages',
-    items:
-      'Java, JavaScript, C, SQL with strong foundation in OOP and problem-solving'
+    title: 'Frontend Development',
+    items: 'HTML, CSS, JavaScript, responsive layouts, and smooth UI interactions'
   },
   {
-    title: 'Frontend',
-    items:
-      'Building responsive UI using HTML, CSS, JavaScript with focus on UX and performance'
-  },
-  {
-    title: 'Backend',
-    items:
-      'Node.js and Express.js for scalable server-side development and REST APIs'
+    title: 'Backend & APIs',
+    items: 'Node.js, Express.js, REST APIs, and modular server architecture'
   },
   {
     title: 'Database',
-    items:
-      'MongoDB for schema design, efficient data handling, and CRUD operations'
+    items: 'MongoDB and SQL for schema design, data retrieval, and optimization'
   },
   {
-    title: 'Concepts',
-    items:
-      'DSA, REST APIs, and core software engineering principles'
+    title: 'Core CS',
+    items: 'Data Structures, Algorithms, OOP, and scalable problem-solving patterns'
   }
 ];
 
-// =====================
-// PROJECTS
-// =====================
 const projects = [
   {
     title: 'AI-Based Mental Health Monitoring Band (Swaas)',
     description:
-      'A wearable IoT system enhanced with AI to analyze physiological signals and detect stress levels. Supported by an IEEE research paper.',
-    techStack: ['IoT', 'Sensors', 'Embedded Systems', 'AI'],
-    features: [
-      'Real-time physiological monitoring',
-      'AI-based stress detection',
-      'Wearable integration'
-    ],
-    github: '',
-    demo: '',
-    paper: 'YOUR_DRIVE_LINK'
+      'Wearable IoT band that analyzes physiological data to identify stress levels in near real-time.',
+    techStack: ['IoT', 'Sensors', 'Embedded Systems', 'AI']
   },
   {
-    title: 'Spotify Clone',
+    title: 'Spotify UI Clone',
     description:
-      'A responsive front-end music player inspired by Spotify focusing on UI/UX and interactivity.',
-    techStack: ['HTML', 'CSS', 'JavaScript'],
-    features: [
-      'Music player UI',
-      'Responsive design',
-      'Interactive controls'
-    ],
-    github: '',
-    demo: ''
+      'A polished and responsive music interface inspired by modern streaming dashboards.',
+    techStack: ['HTML', 'CSS', 'JavaScript']
   },
   {
-    title: 'JavaScript Color Game',
+    title: 'JavaScript Color Challenge',
     description:
-      'An interactive browser game where users guess colors using RGB values.',
-    techStack: ['HTML', 'CSS', 'JavaScript'],
-    features: [
-      'Dynamic color generation',
-      'Difficulty levels',
-      'DOM manipulation'
-    ],
-    github: '',
-    demo: ''
+      'Interactive game where users guess RGB colors with dynamic difficulty levels.',
+    techStack: ['JavaScript', 'DOM', 'Game Logic']
   },
   {
-    title: 'IoT-Based Poultry Disease Detection System',
+    title: 'IoT Poultry Disease Detection',
     description:
-      'Monitors poultry farm conditions and detects disease using sensor data and ML.',
-    techStack: ['IoT Sensors', 'Arduino', 'Cloud', 'Machine Learning'],
-    features: [
-      'Real-time monitoring',
-      'Anomaly detection',
-      'Alert system'
-    ],
-    github: '',
-    demo: ''
-  },
-  {
-    title: 'ML-Based Elder Diabetic Monitoring System',
-    description:
-      'A machine learning system that predicts diabetic risks in elderly individuals.',
-    techStack: ['Python', 'Machine Learning'],
-    features: [
-      'Data preprocessing',
-      'Prediction model',
-      'Health insights'
-    ],
-    github: '',
-    demo: ''
+      'Smart system using sensor telemetry and ML insights to detect anomalies in poultry farms.',
+    techStack: ['Arduino', 'IoT Sensors', 'ML', 'Cloud']
   }
 ];
 
-// =====================
-// LEARNING
-// =====================
-const learningItems = [
-  'Advanced JavaScript (Closures, Async, Scope)',
-  'Node.js & Express Deep Dive',
-  'Data Structures & Algorithms (LeetCode)',
-  'System Design Basics'
-];
+const recognitions = {
+  achievements: [
+    {
+      title: 'Flipkart GRID Robotics Challenge',
+      detail: 'Reached the semi-final stage with a hardware-focused solution.'
+    },
+    {
+      title: 'NASSCOM Agentic AI Program',
+      detail: 'Selected as finalist for practical AI workflow execution.'
+    },
+    {
+      title: 'Academic Project Showcases',
+      detail: 'Presented IoT + AI projects in multiple college-level reviews.'
+    }
+  ],
+  certifications: [
+    {
+      title: 'AI & Big Data in IoT',
+      detail: 'Completed specialization in data-driven IoT systems.'
+    },
+    {
+      title: 'NSIC Technical Internship',
+      detail: 'Hands-on technical training with implementation-focused tasks.'
+    },
+    {
+      title: 'Leadership Workshop',
+      detail: 'Strengthened communication, ownership, and team collaboration.'
+    }
+  ]
+};
 
-// =====================
-// RENDER FUNCTIONS
-// =====================
-
-// ATS Chips
 function renderChips() {
   const container = document.getElementById('keywordChips');
   if (!container) return;
@@ -136,7 +99,22 @@ function renderChips() {
     .join('');
 }
 
-// Skills
+function renderStats() {
+  const grid = document.getElementById('statsGrid');
+  if (!grid) return;
+
+  grid.innerHTML = stats
+    .map(
+      (stat) => `
+      <article class="stat-card reveal">
+        <div class="stat-value">${stat.value}</div>
+        <div class="stat-label">${stat.label}</div>
+      </article>
+    `
+    )
+    .join('');
+}
+
 function renderSkills() {
   const grid = document.getElementById('skillsGrid');
   if (!grid) return;
@@ -144,127 +122,130 @@ function renderSkills() {
   grid.innerHTML = skills
     .map(
       (skill) => `
-      <article class="skill-card">
+      <article class="skill-card reveal">
         <h3>${skill.title}</h3>
-        <p>${skill.items}</p>
+        <p class="muted">${skill.items}</p>
       </article>
     `
     )
     .join('');
 }
 
-// Create Project Card
-function createProjectCard(project, index) {
-  const card = document.createElement('article');
-  card.className = 'project-card';
-
-  const contentId = `project-${index}`;
-
-  card.innerHTML = `
-    <button class="project-toggle" aria-expanded="false" aria-controls="${contentId}">
-      <span class="project-title">
-        ${project.title} ${project.paper ? '🏆' : ''}
-      </span>
-      <span class="chevron">⌄</span>
-    </button>
-
-    <div id="${contentId}" class="project-content">
-      <div class="project-inner">
-        <p>${project.description}</p>
-
-        <p><strong>Tech Stack:</strong> ${project.techStack.join(', ')}</p>
-
-        <p><strong>Key Features:</strong></p>
-        <ul>
-          ${project.features.map((f) => `<li>${f}</li>`).join('')}
-        </ul>
-
-        <div class="btn-row">
-          ${
-            project.github
-              ? `<a class="btn" href="${project.github}" target="_blank">GitHub</a>`
-              : ''
-          }
-          ${
-            project.demo
-              ? `<a class="btn" href="${project.demo}" target="_blank">Live Demo</a>`
-              : ''
-          }
-          ${
-            project.paper
-              ? `<a class="btn" href="${project.paper}" target="_blank">Research Paper</a>`
-              : ''
-          }
-        </div>
-      </div>
-    </div>
-  `;
-
-  const toggle = card.querySelector('.project-toggle');
-
-  toggle.addEventListener('click', () => {
-    const isExpanded = card.classList.contains('expanded');
-
-    document.querySelectorAll('.project-card').forEach((c) => {
-      c.classList.remove('expanded');
-      c.querySelector('.project-toggle').setAttribute('aria-expanded', 'false');
-    });
-
-    if (!isExpanded) {
-      card.classList.add('expanded');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-  });
-
-  return card;
-}
-
-// Projects
 function renderProjects() {
-  const list = document.getElementById('projectList');
-  if (!list) return;
+  const grid = document.getElementById('projectList');
+  if (!grid) return;
 
-  list.innerHTML = '';
-  projects.forEach((p, i) => {
-    list.appendChild(createProjectCard(p, i));
-  });
-}
-
-// Learning
-function renderLearning() {
-  const list = document.getElementById('learningList');
-  if (!list) return;
-
-  list.innerHTML = learningItems
-    .map((item) => `<li>${item}</li>`)
+  grid.innerHTML = projects
+    .map(
+      (project) => `
+      <article class="project-card reveal">
+        <h3>${project.title}</h3>
+        <p class="muted">${project.description}</p>
+        <div class="project-tech">
+          ${project.techStack.map((tech) => `<span class="tech-pill">${tech}</span>`).join('')}
+        </div>
+      </article>
+    `
+    )
     .join('');
 }
 
-// =====================
-// SCROLL ANIMATION
-// =====================
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
-      }
+function renderRecognition(tab = 'achievements') {
+  const list = document.getElementById('achievementList');
+  if (!list) return;
+
+  const items = recognitions[tab] || [];
+  list.innerHTML = items
+    .map(
+      (item) => `
+      <article class="achieve-card reveal">
+        <h3>${item.title}</h3>
+        <p class="muted">${item.detail}</p>
+      </article>
+    `
+    )
+    .join('');
+}
+
+function setupRecognitionTabs() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((btn) => btn.classList.remove('active'));
+      tab.classList.add('active');
+      renderRecognition(tab.dataset.tab);
+      setupRevealAnimation();
     });
-  },
-  { threshold: 0.1 }
-);
+  });
+}
 
-document.querySelectorAll('.section').forEach((section) => {
-  section.style.opacity = 0;
-  section.style.transform = 'translateY(20px)';
-  observer.observe(section);
-});
+async function renderGithubStats() {
+  const container = document.getElementById('githubStats');
+  if (!container) return;
 
-// =====================
-// INIT
-// =====================
+  const fallback = [
+    { label: 'Repos', value: '10+' },
+    { label: 'Followers', value: 'Growing' },
+    { label: 'Following', value: 'Developers' },
+    { label: 'Focus', value: 'Web + AI' }
+  ];
+
+  try {
+    const response = await fetch('https://api.github.com/users/Raji1009');
+    if (!response.ok) throw new Error('GitHub API unavailable');
+
+    const data = await response.json();
+    const liveStats = [
+      { label: 'Public Repos', value: data.public_repos ?? '--' },
+      { label: 'Followers', value: data.followers ?? '--' },
+      { label: 'Following', value: data.following ?? '--' },
+      { label: 'Profile', value: 'Active' }
+    ];
+
+    container.innerHTML = liveStats
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  } catch (error) {
+    container.innerHTML = fallback
+      .map(
+        (item) => `
+        <div class="metric-card">
+          <span class="metric-value">${item.value}</span>
+          <span class="metric-label">${item.label}</span>
+        </div>
+      `
+      )
+      .join('');
+  }
+}
+
+function setupRevealAnimation() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll('.section, .reveal').forEach((node) => observer.observe(node));
+}
+
 renderChips();
+renderStats();
 renderSkills();
 renderProjects();
-renderLearning();
+renderRecognition();
+setupRecognitionTabs();
+setupRevealAnimation();
+renderGithubStats();
