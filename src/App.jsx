@@ -273,7 +273,7 @@ export default function App() {
               )}
               <div className="mt-4">
                 <a
-                  href="https://leetcode.com/Raji1009/"
+                  href="https://leetcode.com/Rajalakshmi_10/"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex rounded-lg border border-violet-400/40 px-3 py-2 text-sm text-violet-300 hover:bg-violet-500/10"
