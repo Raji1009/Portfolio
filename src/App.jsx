@@ -70,7 +70,7 @@ export default function App() {
       }
 
       try {
-        const leetResponse = await fetch('https://leetcode-stats-api.herokuapp.com/Raji1009');
+        const leetResponse = await fetch('https://leetcode-stats-api.herokuapp.com/Rajalakshmi_10');
         const leetData = await leetResponse.json();
         setLeetStats(leetData);
       } catch {
