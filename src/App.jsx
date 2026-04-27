@@ -29,6 +29,19 @@ export default function App() {
   }, [dark]);
 
   useEffect(() => {
+    const normalizeLeetData = (data) => {
+      if (!data || data.status === 'error') return null;
+      return {
+        totalSolved: data.totalSolved ?? data.solvedProblem ?? '--',
+        easySolved: data.easySolved ?? '--',
+        mediumSolved: data.mediumSolved ?? '--',
+        hardSolved: data.hardSolved ?? '--',
+        acceptanceRate: data.acceptanceRate ?? '--',
+        ranking: data.ranking ?? '--',
+        contributionPoints: data.contributionPoints ?? data.reputation ?? '--'
+      };
+    };
+
     const getStats = async () => {
       try {
         const [githubResponse, reposResponse, eventsResponse, contributionResponse] = await Promise.all([
@@ -70,9 +83,29 @@ export default function App() {
       }
 
       try {
-        const leetResponse = await fetch('https://leetcode-stats-api.herokuapp.com/Rajalakshmi_10');
-        const leetData = await leetResponse.json();
-        setLeetStats(leetData);
+        const leetEndpoints = [
+          'https://leetcode-stats-api.herokuapp.com/Raji1009',
+          'https://leetcode-stats-api.vercel.app/Raji1009',
+          'https://leetcode-stats.tashif.codes/Raji1009'
+        ];
+
+        let parsedLeetData = null;
+        for (const endpoint of leetEndpoints) {
+          try {
+            const response = await fetch(endpoint);
+            if (!response.ok) continue;
+            const data = await response.json();
+            const normalized = normalizeLeetData(data);
+            if (normalized) {
+              parsedLeetData = normalized;
+              break;
+            }
+          } catch {
+            // try next endpoint
+          }
+        }
+
+        setLeetStats(parsedLeetData);
       } catch {
         setLeetStats(null);
       } finally {
@@ -268,12 +301,13 @@ export default function App() {
                   <StatsCard label="Total Solved" value={leetStats?.totalSolved ?? '--'} />
                   <StatsCard label="Easy / Medium / Hard" value={`${leetStats?.easySolved ?? '--'} / ${leetStats?.mediumSolved ?? '--'} / ${leetStats?.hardSolved ?? '--'}`} />
                   <StatsCard label="Acceptance Rate" value={leetStats?.acceptanceRate ? `${leetStats.acceptanceRate}%` : '--'} />
+                  <StatsCard label="Global Ranking" value={leetStats?.ranking ?? '--'} />
                   <StatsCard label="Contribution Points" value={leetStats?.contributionPoints ?? '--'} />
                 </div>
               )}
               <div className="mt-4">
                 <a
-                  href="https://leetcode.com/Rajalakshmi_10/"
+                  href="https://leetcode.com/Raji1009/"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex rounded-lg border border-violet-400/40 px-3 py-2 text-sm text-violet-300 hover:bg-violet-500/10"

@@ -24,9 +24,9 @@ export const skills = [
 
 export const projects = [
   {
-    title: 'AI-Based Mental Health Monitoring Band',
-    stack: ['IoT', 'ML', 'Python'],
-    description: 'Wearable device that monitors physiological signals and predicts stress patterns.',
+    title: 'Swaas – Smart Health Band',
+    stack: ['rPPG', 'FastAPI', 'React', 'IoT', 'ML'],
+    description: 'Real-time stress monitoring system that combines sensor signals and intelligent health analytics.',
     github: 'https://github.com/Raji1009/Swaas',
     demo: 'https://swaasband.vercel.app/#/',
     image:
@@ -62,7 +62,39 @@ export const projects = [
 ];
 
 export const timeline = [
-  { type: 'Education', title: 'B.E. (3rd Year)', detail: 'Engineering student with placement-focused preparation.' },
-  { type: 'Achievement', title: 'NASSCOM Agentic AI Program Finalist', detail: 'Recognized for practical AI solutioning.' },
-  { type: 'Certification', title: 'AI & Big Data in IoT', detail: 'Completed certification focused on data-driven IoT.' }
+  {
+    type: 'Education',
+    title: 'B.E. (3rd Year – CSE IoT)',
+    detail: 'Focused on full-stack development, DSA, and real-world system building.'
+  },
+  {
+    type: 'Project',
+    title: 'Swaas – Smart Health Band',
+    detail: 'Built a real-time stress monitoring system using rPPG, FastAPI, and React.'
+  },
+  {
+    type: 'Achievement',
+    title: 'Smart India Hackathon (SIH) – College Level Shortlisted',
+    detail: 'Selected among top teams for innovative problem-solving and project evaluation.'
+  },
+  {
+    type: 'Certification',
+    title: 'AWS Cloud Solutions Architect Professional',
+    detail: 'Developed skills in designing scalable and secure cloud architectures.'
+  },
+  {
+    type: 'Certification',
+    title: 'Industrial Internet of Things – University of Michigan',
+    detail: 'Learned real-world IoT systems and industrial applications.'
+  },
+  {
+    type: 'Certification',
+    title: 'Cloud Computing – NPTEL',
+    detail: 'Gained foundational knowledge of cloud models and deployment strategies.'
+  },
+  {
+    type: 'Experience',
+    title: 'ML & IoT Intern',
+    detail: 'Worked on real-time disease detection using sensor data and ML techniques.'
+  }
 ];
