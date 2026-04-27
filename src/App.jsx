@@ -84,9 +84,9 @@ export default function App() {
 
       try {
         const leetEndpoints = [
-          'https://leetcode-stats-api.herokuapp.com/Raji1009',
-          'https://leetcode-stats-api.vercel.app/Raji1009',
-          'https://leetcode-stats.tashif.codes/Raji1009'
+          'https://leetcode-stats-api.herokuapp.com/Rajalakshmi_10',
+          'https://leetcode-stats-api.vercel.app/Rajalakshmi_10',
+          'https://leetcode-stats.tashif.codes/Rajalakshmi_10'
         ];
 
         let parsedLeetData = null;
@@ -307,7 +307,7 @@ export default function App() {
               )}
               <div className="mt-4">
                 <a
-                  href="https://leetcode.com/Raji1009/"
+                  href="https://leetcode.com/Rajalakshmi_10/"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex rounded-lg border border-violet-400/40 px-3 py-2 text-sm text-violet-300 hover:bg-violet-500/10"
