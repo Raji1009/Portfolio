@@ -9,7 +9,7 @@ const fadeUp = {
   initial: { opacity: 0, y: 18 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.55 }
+  transition: { duration: 0.5 }
 };
 
 export default function App() {
@@ -38,8 +38,7 @@ export default function App() {
         hardSolved: data.hardSolved ?? '--',
         acceptanceRate: data.acceptanceRate ?? '--',
         ranking: data.ranking ?? '--',
-        contributionPoints: data.contributionPoints ?? data.reputation ?? '--',
-        reputation: data.reputation ?? '--'
+        contributionPoints: data.contributionPoints ?? data.reputation ?? '--'
       };
     };
 
@@ -85,9 +84,9 @@ export default function App() {
 
       try {
         const leetEndpoints = [
-          'https://leetcode-stats-api.herokuapp.com/Raji1009',
-          'https://leetcode-stats-api.vercel.app/Raji1009',
-          'https://leetcode-stats.tashif.codes/Raji1009'
+          'https://leetcode-stats-api.herokuapp.com/Rajalakshmi_10',
+          'https://leetcode-stats-api.vercel.app/Rajalakshmi_10',
+          'https://leetcode-stats.tashif.codes/Rajalakshmi_10'
         ];
 
         let parsedLeetData = null;
@@ -129,17 +128,6 @@ export default function App() {
   );
 
   const currentProject = projects[activeProject];
-  const initials = profile.name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2);
-  const leetTotal = Number(leetStats?.totalSolved) || 0;
-  const leetBreakdown = [
-    { label: 'Easy', value: Number(leetStats?.easySolved) || 0, color: 'bg-emerald-400' },
-    { label: 'Medium', value: Number(leetStats?.mediumSolved) || 0, color: 'bg-amber-400' },
-    { label: 'Hard', value: Number(leetStats?.hardSolved) || 0, color: 'bg-rose-400' }
-  ];
 
   const handleContactSubmit = (event) => {
     event.preventDefault();
@@ -151,48 +139,56 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#0a0a1a] text-white">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(168,85,247,0.25),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(124,58,237,0.18),transparent_28%),linear-gradient(180deg,#0a0a1a_0%,#0d0d2b_45%,#0a0a1a_100%)]" />
-      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:46px_46px]" />
+    <div
+      className={`min-h-screen bg-grid bg-[length:28px_28px] ${
+        dark ? 'bg-slate-950 text-slate-100' : 'bg-slate-100 text-slate-900'
+      }`}
+    >
+      <div
+        className={`pointer-events-none fixed inset-0 ${
+          dark
+            ? 'bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.16),_transparent_44%),radial-gradient(circle_at_bottom_right,_rgba(139,92,246,0.16),_transparent_40%)]'
+            : 'bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.14),_transparent_48%),radial-gradient(circle_at_bottom_right,_rgba(124,58,237,0.14),_transparent_45%)]'
+        }`}
+      />
       <Navbar dark={dark} onToggleTheme={() => setDark((prev) => !prev)} />
 
-      <main id="home" className="relative mx-auto flex w-[min(1120px,92vw)] flex-col gap-12 py-10">
-        <motion.section {...fadeUp} className="glass-ring relative rounded-[2rem] border border-white/10 bg-[#0d0d2b]/80 p-8 shadow-[0_30px_120px_rgba(124,58,237,0.24)] backdrop-blur-xl md:p-12">
-          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
-          <div className="relative grid items-center gap-8 md:grid-cols-[1fr_260px]">
-            <div>
-              <p className="text-sm font-medium text-purple-300">Frontend-first, placement-focused</p>
-              <h1 className="mt-3 text-4xl font-black leading-tight text-white md:text-6xl">{profile.name}</h1>
-              <p className="cursor-pulse mt-4 text-lg font-semibold text-[#a0a0c0] md:text-xl">{profile.role}</p>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-[#a0a0c0]">{profile.intro}</p>
-              <div className="mt-7 flex flex-wrap gap-3">
-                <a href="#projects" className="rounded-xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(124,58,237,0.45)] transition hover:bg-purple-500">
-                  View Projects
-                </a>
-                <a href="#contact" className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-purple-100 transition hover:border-purple-400/50 hover:bg-purple-500/10">
-                  Contact
-                </a>
-                <a href="https://github.com/Raji1009" target="_blank" rel="noreferrer" className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-[#a0a0c0] transition hover:text-white">
-                  GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/Rajalakshmir10" target="_blank" rel="noreferrer" className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-[#a0a0c0] transition hover:text-white">
-                  LinkedIn
-                </a>
-              </div>
-            </div>
-            <div className="mx-auto flex h-56 w-56 items-center justify-center rounded-full border border-purple-300/40 bg-[radial-gradient(circle,rgba(168,85,247,0.28),rgba(255,255,255,0.04)_55%,rgba(124,58,237,0.12))] text-5xl font-black text-white shadow-[0_0_80px_rgba(168,85,247,0.35)]">
-              {initials}
-            </div>
+      <main id="home" className="relative mx-auto flex w-[min(1120px,92vw)] flex-col gap-6 py-8">
+        <motion.section
+          {...fadeUp}
+          className={`rounded-3xl border p-8 shadow-glow ${
+            dark ? 'border-slate-800 bg-slate-900/70' : 'border-slate-300 bg-white/80'
+          }`}
+        >
+          <p className={`text-sm font-medium ${dark ? 'text-cyan-300' : 'text-cyan-700'}`}>Frontend-first, placement-focused</p>
+          <h1 className="mt-2 text-3xl font-extrabold leading-tight md:text-5xl">{profile.name}</h1>
+          <p className={`mt-3 text-lg ${dark ? 'text-slate-300' : 'text-slate-700'}`}>{profile.role}</p>
+          <p className={`mt-4 max-w-3xl ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{profile.intro}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="#projects"
+              className={`rounded-lg px-4 py-2 ${
+                dark ? 'bg-cyan-500/20 text-cyan-200 hover:bg-cyan-500/30' : 'bg-cyan-100 text-cyan-800 hover:bg-cyan-200'
+              }`}
+            >
+              View Projects
+            </a>
+            <a
+              href="#contact"
+              className={`rounded-lg border px-4 py-2 ${
+                dark ? 'border-slate-700 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              Contact
+            </a>
           </div>
         </motion.section>
 
-        <div className="section-divider" />
-
-        <motion.section id="about" {...fadeUp} className="rounded-[2rem] bg-[#10102e]/70 p-1">
+        <motion.section id="about" {...fadeUp}>
           <Card title="About">
             <p>{profile.about}</p>
-            <p className="mt-3 text-[#a0a0c0]">Education: 3rd year engineering student.</p>
-            <p className="mt-1 text-[#a0a0c0]">Goal: secure placements through strong DSA + development execution.</p>
+            <p className="mt-3 text-slate-400">Education: 3rd year engineering student.</p>
+            <p className="mt-1 text-slate-400">Goal: secure placements through strong DSA + development execution.</p>
           </Card>
         </motion.section>
 
@@ -201,7 +197,7 @@ export default function App() {
             <Card key={skill.title} title={skill.title}>
               <ul className="space-y-2">
                 {skill.items.map((item) => (
-                  <li key={item} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-[#a0a0c0]">
+                  <li key={item} className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2 text-sm">
                     {item}
                   </li>
                 ))}
@@ -210,66 +206,63 @@ export default function App() {
           ))}
         </motion.section>
 
-        <motion.section id="projects" {...fadeUp} className="rounded-[2rem] bg-[#0d0d2b]/70 p-6 md:p-8">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-3xl font-black text-white">Projects</h2>
-            <span className="rounded-full border border-purple-400/30 bg-purple-500/10 px-3 py-1 text-xs text-purple-200">Featured Work</span>
-          </div>
-          <div className="space-y-8">
-            {projects.map((project, index) => (
-              <motion.article
-                key={project.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.55 }}
-                className={`glass-ring grid gap-6 rounded-[1.7rem] border border-white/10 bg-white/[0.04] p-5 shadow-[0_24px_90px_rgba(124,58,237,0.14)] md:grid-cols-2 md:p-7 ${index % 2 ? 'md:[&>div:first-child]:order-2' : ''}`}
+        <motion.section id="projects" {...fadeUp}>
+          <h2 className="mb-4 text-2xl font-bold">Projects</h2>
+          <Card className="overflow-hidden">
+            <motion.div
+              key={currentProject.title}
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.45 }}
+            >
+              <img
+                src={currentProject.image}
+                alt={currentProject.title}
+                loading="lazy"
+                className="h-52 w-full rounded-xl object-cover"
+              />
+              <h3 className="mt-4 text-xl font-semibold text-slate-100">{currentProject.title}</h3>
+              <p className="mt-2 text-sm text-slate-400">{currentProject.description}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {currentProject.stack.map((tech) => (
+                  <span key={tech} className="rounded-full border border-slate-700 px-2.5 py-1 text-xs text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <a className="text-cyan-300 hover:text-cyan-200" href={currentProject.github} target="_blank" rel="noreferrer">GitHub</a>
+                <a className="text-violet-300 hover:text-violet-200" href={currentProject.demo} target="_blank" rel="noreferrer">Live Demo</a>
+              </div>
+            </motion.div>
+            <div className="mt-6 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
+                onClick={() => setActiveProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1))}
               >
-                <div className="project-mockup overflow-hidden rounded-2xl border border-white/10 bg-[#10102e] p-2">
-                  <img src={project.image} alt={project.title} loading="lazy" className="h-64 w-full rounded-xl object-cover" />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#a0a0c0]">{project.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.stack.map((tech) => (
-                      <span key={tech} className="rounded-full border border-purple-400/20 bg-purple-500/10 px-2.5 py-1 text-xs text-purple-200">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-5 flex flex-wrap gap-4 text-sm">
-                    <a className="text-purple-300 transition hover:text-white" href={project.github} target="_blank" rel="noreferrer">GitHub</a>
-                    <a className="text-purple-300 transition hover:text-white" href={project.demo} target="_blank" rel="noreferrer">Live Demo</a>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-          <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
-            <button type="button" className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-[#a0a0c0] transition hover:border-purple-400/40 hover:text-white" onClick={() => setActiveProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1))}>
-              Previous
-            </button>
-            <p className="text-xs text-[#a0a0c0]">Project {activeProject + 1} of {projects.length}</p>
-            <button type="button" className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-[#a0a0c0] transition hover:border-purple-400/40 hover:text-white" onClick={() => setActiveProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1))}>
-              Next
-            </button>
-          </div>
+                Previous
+              </button>
+              <p className="text-xs text-slate-400">Project {activeProject + 1} of {projects.length}</p>
+              <button
+                type="button"
+                className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
+                onClick={() => setActiveProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1))}
+              >
+                Next
+              </button>
+            </div>
+          </Card>
         </motion.section>
 
-        <div className="section-divider" />
-
-        <motion.section id="stats" {...fadeUp} className="rounded-[2rem] bg-[#10102e]/70 p-6 md:p-8">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-3xl font-black text-white">Stats</h2>
-            <span className="rounded-full border border-purple-400/30 bg-purple-500/10 px-3 py-1 text-xs text-purple-200">Live Dashboard</span>
-          </div>
+        <motion.section id="stats" {...fadeUp}>
+          <h2 className="mb-4 text-2xl font-bold">Stats</h2>
           <div className="grid gap-4 lg:grid-cols-2">
             <Card title="GitHub Stats">
               {githubLoading ? (
                 <div className="grid gap-3 sm:grid-cols-2">
                   {[...Array(4)].map((_, idx) => (
-                    <div key={idx} className="h-20 animate-pulse rounded-xl bg-white/10" />
+                    <div key={idx} className="h-20 animate-pulse rounded-xl bg-slate-800/70" />
                   ))}
                 </div>
               ) : (
@@ -281,11 +274,16 @@ export default function App() {
                 </div>
               )}
               <div className="mt-4 grid gap-3">
-                <img src={githubApiImage} loading="lazy" alt="GitHub Readme Stats" className="w-full rounded-xl border border-white/10" />
-                <img src={streakImage} loading="lazy" alt="GitHub Streak Stats" className="w-full rounded-xl border border-white/10" />
+                <img src={githubApiImage} loading="lazy" alt="GitHub Readme Stats" className="w-full rounded-xl border border-slate-800" />
+                <img src={streakImage} loading="lazy" alt="GitHub Streak Stats" className="w-full rounded-xl border border-slate-800" />
               </div>
               <div className="mt-4">
-                <a href="https://github.com/Raji1009" target="_blank" rel="noreferrer" className="inline-flex rounded-lg border border-purple-400/40 px-3 py-2 text-sm text-purple-200 transition hover:bg-purple-500/10">
+                <a
+                  href="https://github.com/Raji1009"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg border border-cyan-400/40 px-3 py-2 text-sm text-cyan-300 hover:bg-cyan-500/10"
+                >
                   Open GitHub Profile
                 </a>
               </div>
@@ -295,7 +293,7 @@ export default function App() {
               {leetLoading ? (
                 <div className="grid gap-3 sm:grid-cols-2">
                   {[...Array(4)].map((_, idx) => (
-                    <div key={idx} className="h-20 animate-pulse rounded-xl bg-white/10" />
+                    <div key={idx} className="h-20 animate-pulse rounded-xl bg-slate-800/70" />
                   ))}
                 </div>
               ) : (
@@ -305,30 +303,15 @@ export default function App() {
                   <StatsCard label="Acceptance Rate" value={leetStats?.acceptanceRate ? `${leetStats.acceptanceRate}%` : '--'} />
                   <StatsCard label="Global Ranking" value={leetStats?.ranking ?? '--'} />
                   <StatsCard label="Contribution Points" value={leetStats?.contributionPoints ?? '--'} />
-                  <StatsCard label="Reputation" value={leetStats?.reputation ?? '--'} />
                 </div>
               )}
-              <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                <p className="mb-2 text-sm font-semibold text-white">Solved Distribution</p>
-                <div className="space-y-2">
-                  {leetBreakdown.map((item) => {
-                    const percentage = leetTotal > 0 ? Math.round((item.value / leetTotal) * 100) : 0;
-                    return (
-                      <div key={item.label}>
-                        <div className="mb-1 flex justify-between text-xs text-[#a0a0c0]">
-                          <span>{item.label}</span>
-                          <span>{item.value} ({percentage}%)</span>
-                        </div>
-                        <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                          <div className={`h-full ${item.color}`} style={{ width: `${percentage}%` }} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
               <div className="mt-4">
-                <a href="https://leetcode.com/Raji1009/" target="_blank" rel="noreferrer" className="inline-flex rounded-lg border border-purple-400/40 px-3 py-2 text-sm text-purple-200 transition hover:bg-purple-500/10">
+                <a
+                  href="https://leetcode.com/Rajalakshmi_10/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg border border-violet-400/40 px-3 py-2 text-sm text-violet-300 hover:bg-violet-500/10"
+                >
                   Open LeetCode Profile
                 </a>
               </div>
@@ -336,42 +319,61 @@ export default function App() {
           </div>
         </motion.section>
 
-        <motion.section id="timeline" {...fadeUp} className="rounded-[2rem] bg-[#0d0d2b]/70 p-6 md:p-8">
-          <h2 className="mb-6 text-3xl font-black text-white">Timeline</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+        <motion.section id="timeline" {...fadeUp}>
+          <h2 className="mb-4 text-2xl font-bold">Timeline</h2>
+          <div className="relative space-y-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+            <div className="absolute bottom-8 left-8 top-8 w-px bg-gradient-to-b from-cyan-400/80 via-violet-400/50 to-transparent" />
             {timeline.map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.35 }}
-                transition={{ duration: 0.45, delay: index * 0.04 }}
-                className="glass-ring rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_18px_70px_rgba(124,58,237,0.12)]"
+                initial={{ opacity: 0, x: index % 2 === 0 ? -28 : 28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.45 }}
+                transition={{ duration: 0.45 }}
+                className="relative ml-14 rounded-xl border border-slate-800 bg-slate-950/70 p-4"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-purple-400/30 bg-purple-500/10 text-sm font-bold text-purple-200">
-                  {item.type[0]}
-                </div>
-                <p className="text-xs uppercase tracking-wide text-purple-300">{item.type}</p>
-                <h3 className="mt-2 font-semibold text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
+                <span className="absolute -left-[41px] top-5 h-3.5 w-3.5 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(34,211,238,0.7)]" />
+                <p className="text-xs uppercase tracking-wide text-cyan-300">{item.type}</p>
+                <h3 className="mt-1 font-semibold">{item.title}</h3>
+                <p className="text-sm text-slate-400">{item.detail}</p>
               </motion.div>
             ))}
           </div>
         </motion.section>
 
-        <motion.section id="contact" {...fadeUp} className="glass-ring rounded-[2rem] border border-white/10 bg-[#10102e]/80 p-6 shadow-[0_24px_90px_rgba(124,58,237,0.16)] md:p-8">
-          <h2 className="text-3xl font-black text-white">Contact</h2>
-          <form onSubmit={handleContactSubmit} className="mt-5 grid gap-3 md:grid-cols-2">
-            <input className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-white outline-none transition placeholder:text-[#a0a0c0] focus:border-purple-400/50" placeholder="Your Name" value={formData.name} onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))} required />
-            <input className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-white outline-none transition placeholder:text-[#a0a0c0] focus:border-purple-400/50" placeholder="Your Email" type="email" value={formData.email} onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))} required />
-            <textarea className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-white outline-none transition placeholder:text-[#a0a0c0] focus:border-purple-400/50 md:col-span-2" rows="4" placeholder="Message" value={formData.message} onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))} required />
-            <button type="submit" className="rounded-xl bg-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(124,58,237,0.35)] transition hover:bg-purple-500 md:col-span-2">
+        <motion.section id="contact" {...fadeUp} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <h2 className="text-2xl font-bold">Contact</h2>
+          <form onSubmit={handleContactSubmit} className="mt-4 grid gap-3 md:grid-cols-2">
+            <input
+              className="rounded-lg border border-slate-700 bg-slate-950 p-3"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+              required
+            />
+            <input
+              className="rounded-lg border border-slate-700 bg-slate-950 p-3"
+              placeholder="Your Email"
+              type="email"
+              value={formData.email}
+              onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+              required
+            />
+            <textarea
+              className="md:col-span-2 rounded-lg border border-slate-700 bg-slate-950 p-3"
+              rows="4"
+              placeholder="Message"
+              value={formData.message}
+              onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
+              required
+            />
+            <button type="submit" className="md:col-span-2 rounded-lg bg-cyan-600/20 px-4 py-2 text-cyan-200 hover:bg-cyan-600/30">
               Send Message
             </button>
           </form>
-          <div className="mt-5 flex gap-4 text-sm">
-            <a href="https://github.com/Raji1009" target="_blank" rel="noreferrer" className="text-purple-300 transition hover:text-white">GitHub</a>
-            <a href="https://www.linkedin.com/in/Rajalakshmir10" target="_blank" rel="noreferrer" className="text-purple-300 transition hover:text-white">LinkedIn</a>
+          <div className="mt-4 flex gap-4 text-sm">
+            <a href="https://github.com/Raji1009" target="_blank" rel="noreferrer" className="text-cyan-300">GitHub</a>
+            <a href="https://www.linkedin.com/in/Rajalakshmir10" target="_blank" rel="noreferrer" className="text-violet-300">LinkedIn</a>
           </div>
         </motion.section>
       </main>
