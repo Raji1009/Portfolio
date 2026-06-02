@@ -12,38 +12,11 @@ const fadeUp = {
   transition: { duration: 0.5 }
 };
 
-const highlightSections = [
-  {
-    label: 'Experience',
-    types: ['Experience'],
-    summary: 'Hands-on professional work and applied engineering practice.',
-    accent: 'from-purple-400 to-indigo-400',
-    featured: true
-  },
-  {
-    label: 'Certifications',
-    types: ['Certification'],
-    summary: 'Focused credentials grouped separately for quick scanning.',
-    accent: 'from-indigo-400 to-purple-400'
-  },
-  {
-    label: 'Education',
-    types: ['Education'],
-    summary: 'Academic foundation and current learning focus.',
-    accent: 'from-violet-400 to-fuchsia-400'
-  },
-  {
-    label: 'Achievements',
-    types: ['Achievement'],
-    summary: 'Recognition and selection milestones.',
-    accent: 'from-fuchsia-400 to-violet-400'
-  },
-  {
-    label: 'Projects',
-    types: ['Project'],
-    summary: 'Signature builds separated from work experience.',
-    accent: 'from-violet-400 to-indigo-400'
-  }
+const timelineSections = [
+  { label: 'Education', types: ['Education'], accent: 'from-violet-400 to-fuchsia-400' },
+  { label: 'Experience & Projects', types: ['Experience', 'Project'], accent: 'from-purple-400 to-indigo-400' },
+  { label: 'Achievements', types: ['Achievement'], accent: 'from-fuchsia-400 to-violet-400' },
+  { label: 'Certifications', types: ['Certification'], accent: 'from-indigo-400 to-purple-400' }
 ];
 
 export default function App() {
@@ -158,6 +131,15 @@ export default function App() {
     () => 'https://streak-stats.demolab.com?user=Raji1009&theme=midnight-purple&hide_border=true&background=0D0D2B&ring=A855F7&fire=7C3AED&currStreakLabel=A0A0C0',
     []
   );
+
+  const handleContactSubmit = (event) => {
+    event.preventDefault();
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:lavanis7u@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#0a0a1a] text-white">
@@ -337,43 +319,33 @@ export default function App() {
           </div>
         </motion.section>
 
-        <motion.section id="journey" {...fadeUp} className="section-shell bg-[#10102e]">
+        <motion.section id="timeline" {...fadeUp} className="section-shell bg-[#10102e]">
           <div className="section-heading">
-            <h2>Experience & Credentials</h2>
+            <h2>Timeline</h2>
           </div>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {highlightSections.map((section) => {
-              const sectionItems = timeline.filter((item) => section.types.includes(item.type));
-
-              return (
-                <div key={section.label} className={`glass-card rounded-3xl p-5 ${section.featured ? 'lg:col-span-2' : ''}`}>
-                  <div className="mb-5 flex items-start gap-3">
-                    <span className={`mt-1 h-12 w-1.5 rounded-full bg-gradient-to-b ${section.accent} shadow-[0_0_22px_rgba(124,58,237,0.38)]`} />
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.24em] text-violet-300">{section.label}</p>
-                      <h3 className="mt-1 text-xl font-bold text-white">{section.summary}</h3>
-                    </div>
-                  </div>
-                  <div className={`grid gap-3 ${sectionItems.length > 1 ? 'md:grid-cols-2' : ''}`}>
-                    {sectionItems.map((item, index) => (
-                      <motion.article
-                        key={item.title}
-                        initial={{ opacity: 0, y: 18 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.35 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        className="relative h-full rounded-2xl border border-white/10 bg-[#0a0a1a]/55 p-4 transition hover:border-violet-300/35 hover:bg-white/[0.06]"
-                      >
-                        <div className={`absolute left-0 top-5 h-10 w-1 rounded-r-full bg-gradient-to-b ${section.accent}`} />
-                        <p className="pl-3 text-xs uppercase tracking-[0.22em] text-violet-300">{item.type}</p>
-                        <h4 className="mt-2 pl-3 font-semibold text-white">{item.title}</h4>
-                        <p className="mt-2 pl-3 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
-                      </motion.article>
-                    ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            {timeline.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 0.45, delay: index * 0.04 }}
+                className="glass-card group relative overflow-hidden rounded-3xl p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_0_34px_rgba(124,58,237,0.25)]"
+              >
+                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-violet-500/10 blur-xl" />
+                <div className="relative flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/30 bg-violet-500/15 text-sm font-bold text-violet-200 shadow-[0_0_24px_rgba(124,58,237,0.28)]">
+                    {item.type.slice(0, 2)}
+                  </span>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.22em] text-violet-300">{item.type}</p>
+                    <h3 className="mt-2 font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
                   </div>
                 </div>
-              );
-            })}
+              </motion.article>
+            ))}
           </div>
         </motion.section>
 
@@ -382,13 +354,9 @@ export default function App() {
           <div className="section-heading">
             <h2>Contact</h2>
           </div>
-          <form action="https://formsubmit.co/irajalakshmirajaram@gmail.com" method="POST" className="grid gap-3 md:grid-cols-2">
-            <input type="hidden" name="_subject" value="Portfolio Contact from Rajalakshmi R Portfolio" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
+          <form onSubmit={handleContactSubmit} className="grid gap-3 md:grid-cols-2">
             <input
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)]"
-              name="name"
               placeholder="Your Name"
               value={formData.name}
               onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
@@ -396,7 +364,6 @@ export default function App() {
             />
             <input
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)]"
-              name="email"
               placeholder="Your Email"
               type="email"
               value={formData.email}
@@ -405,7 +372,6 @@ export default function App() {
             />
             <textarea
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)] md:col-span-2"
-              name="message"
               rows="4"
               placeholder="Message"
               value={formData.message}

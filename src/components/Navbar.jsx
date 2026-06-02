@@ -1,12 +1,5 @@
 export default function Navbar() {
-  const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'stats', label: 'Stats' },
-    { id: 'journey', label: 'Highlights' },
-    { id: 'contact', label: 'Contact' }
-  ];
+  const navItems = ['about', 'skills', 'projects', 'stats', 'timeline', 'contact'];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a1a]/65 backdrop-blur-xl">
@@ -18,8 +11,8 @@ export default function Navbar() {
         <nav className="flex flex-wrap gap-2">
           {navItems.map((item) => (
             <a
-              key={item.id}
-              href={`#${item.id}`}
+              key={item}
+              href={`#${item}`}
               className="rounded-full px-3 py-1 text-sm text-[#a0a0c0] transition hover:bg-white/5 hover:text-white"
             >
               {item.label}
