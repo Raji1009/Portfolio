@@ -12,6 +12,13 @@ const fadeUp = {
   transition: { duration: 0.5 }
 };
 
+const timelineSections = [
+  { label: 'Education', types: ['Education'], accent: 'from-violet-400 to-fuchsia-400' },
+  { label: 'Experience & Projects', types: ['Experience', 'Project'], accent: 'from-purple-400 to-indigo-400' },
+  { label: 'Achievements', types: ['Achievement'], accent: 'from-fuchsia-400 to-violet-400' },
+  { label: 'Certifications', types: ['Certification'], accent: 'from-indigo-400 to-purple-400' }
+];
+
 export default function App() {
   const [githubLoading, setGithubLoading] = useState(true);
   const [leetLoading, setLeetLoading] = useState(true);
@@ -38,37 +45,41 @@ export default function App() {
 
     const getStats = async () => {
       try {
-        const [githubResponse, reposResponse, eventsResponse, contributionResponse] = await Promise.all([
-          fetch('https://api.github.com/users/Raji1009'),
-          fetch('https://api.github.com/users/Raji1009/repos?per_page=100'),
-          fetch('https://api.github.com/users/Raji1009/events/public?per_page=100'),
-          fetch('https://github-contributions-api.jogruber.de/v4/Raji1009?y=last').catch(() => null)
+        const parseJson = async (response) => {
+          if (!response?.ok) return null;
+          const data = await response.json();
+          return data?.message ? null : data;
+        };
+
+        const [githubResult, reposResult, eventsResult, contributionResult] = await Promise.allSettled([
+          fetch('https://api.github.com/users/Raji1009').then(parseJson),
+          fetch('https://api.github.com/users/Raji1009/repos?per_page=100').then(parseJson),
+          fetch('https://api.github.com/users/Raji1009/events/public?per_page=100').then(parseJson),
+          fetch('https://github-contributions-api.jogruber.de/v4/Raji1009?y=last').then(parseJson)
         ]);
 
-        const githubData = await githubResponse.json();
-        if (githubData?.message) {
-          throw new Error(githubData.message);
-        }
+        const githubData = githubResult.status === 'fulfilled' ? githubResult.value : null;
+        const reposData = reposResult.status === 'fulfilled' ? reposResult.value : null;
+        const eventsData = eventsResult.status === 'fulfilled' ? eventsResult.value : null;
+        const contributionData = contributionResult.status === 'fulfilled' ? contributionResult.value : null;
 
         setGithubStats(githubData);
 
-        const reposData = await reposResponse.json();
         if (Array.isArray(reposData)) {
           const stars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
           const forks = reposData.reduce((sum, repo) => sum + (repo.forks_count || 0), 0);
           setRepoTotals({ stars, forks });
         }
 
-        const eventsData = await eventsResponse.json();
         if (Array.isArray(eventsData)) {
           const pushEvents = eventsData.filter((event) => event.type === 'PushEvent');
           const commitCount = pushEvents.reduce((sum, event) => sum + (event.payload?.commits?.length || 0), 0);
           setRecentCommits(commitCount);
         }
 
-        if (contributionResponse?.ok) {
-          const contributionData = await contributionResponse.json();
-          setGithubContributions(contributionData?.total?.[2025] || contributionData?.total?.[2024] || '--');
+        if (contributionData?.total) {
+          const contributionTotal = Object.values(contributionData.total).reduce((sum, value) => sum + Number(value || 0), 0);
+          setGithubContributions(contributionTotal || '--');
         }
       } catch {
         setGithubStats(null);
@@ -112,12 +123,12 @@ export default function App() {
 
   const githubApiImage = useMemo(
     () =>
-      'https://github-readme-stats.vercel.app/api?username=Raji1009&show_icons=true&theme=github_dark&hide_border=true',
+      'https://github-readme-stats.vercel.app/api?username=Raji1009&show_icons=true&theme=midnight-purple&hide_border=true&bg_color=0d0d2b&title_color=a855f7&text_color=a0a0c0&icon_color=7c3aed',
     []
   );
 
   const streakImage = useMemo(
-    () => 'https://github-readme-streak-stats.herokuapp.com?user=Raji1009&theme=github-dark&hide_border=true',
+    () => 'https://streak-stats.demolab.com?user=Raji1009&theme=midnight-purple&hide_border=true&background=0D0D2B&ring=A855F7&fire=7C3AED&currStreakLabel=A0A0C0',
     []
   );
 
