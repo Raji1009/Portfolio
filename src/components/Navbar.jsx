@@ -15,7 +15,7 @@ export default function Navbar() {
               href={`#${item}`}
               className="rounded-full px-3 py-1 text-sm text-[#a0a0c0] transition hover:bg-white/5 hover:text-white"
             >
-              {item[0].toUpperCase() + item.slice(1)}
+              {item.label}
             </a>
           ))}
         </nav>
