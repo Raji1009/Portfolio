@@ -132,6 +132,15 @@ export default function App() {
     []
   );
 
+  const handleContactSubmit = (event) => {
+    event.preventDefault();
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:lavanis7u@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="min-h-screen overflow-hidden bg-[#0a0a1a] text-white">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(124,58,237,0.30),transparent_28%),radial-gradient(circle_at_82%_0%,rgba(168,85,247,0.20),transparent_24%),radial-gradient(circle_at_50%_90%,rgba(76,29,149,0.18),transparent_34%)]" />
@@ -314,39 +323,29 @@ export default function App() {
           <div className="section-heading">
             <h2>Timeline</h2>
           </div>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {timelineSections.map((section) => {
-              const sectionItems = timeline.filter((item) => section.types.includes(item.type));
-
-              return (
-                <div key={section.label} className="glass-card rounded-3xl p-5">
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className={`h-10 w-1.5 rounded-full bg-gradient-to-b ${section.accent} shadow-[0_0_22px_rgba(124,58,237,0.38)]`} />
-                    <div>
-                      <h3 className="text-xl font-bold text-white">{section.label}</h3>
-                      <p className="text-xs uppercase tracking-[0.2em] text-[#a0a0c0]">{sectionItems.length} item{sectionItems.length > 1 ? 's' : ''}</p>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {sectionItems.map((item, index) => (
-                      <motion.article
-                        key={item.title}
-                        initial={{ opacity: 0, y: 18 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.35 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        className="relative rounded-2xl border border-white/10 bg-[#0a0a1a]/55 p-4 transition hover:border-violet-300/35 hover:bg-white/[0.06]"
-                      >
-                        <div className={`absolute left-0 top-5 h-10 w-1 rounded-r-full bg-gradient-to-b ${section.accent}`} />
-                        <p className="pl-3 text-xs uppercase tracking-[0.22em] text-violet-300">{item.type}</p>
-                        <h4 className="mt-2 pl-3 font-semibold text-white">{item.title}</h4>
-                        <p className="mt-2 pl-3 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
-                      </motion.article>
-                    ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            {timeline.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 0.45, delay: index * 0.04 }}
+                className="glass-card group relative overflow-hidden rounded-3xl p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_0_34px_rgba(124,58,237,0.25)]"
+              >
+                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-violet-500/10 blur-xl" />
+                <div className="relative flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/30 bg-violet-500/15 text-sm font-bold text-violet-200 shadow-[0_0_24px_rgba(124,58,237,0.28)]">
+                    {item.type.slice(0, 2)}
+                  </span>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.22em] text-violet-300">{item.type}</p>
+                    <h3 className="mt-2 font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
                   </div>
                 </div>
-              );
-            })}
+              </motion.article>
+            ))}
           </div>
         </motion.section>
 
@@ -355,13 +354,9 @@ export default function App() {
           <div className="section-heading">
             <h2>Contact</h2>
           </div>
-          <form action="https://formsubmit.co/irajalakshmirajaram@gmail.com" method="POST" className="grid gap-3 md:grid-cols-2">
-            <input type="hidden" name="_subject" value="Portfolio Contact from Rajalakshmi R Portfolio" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
+          <form onSubmit={handleContactSubmit} className="grid gap-3 md:grid-cols-2">
             <input
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)]"
-              name="name"
               placeholder="Your Name"
               value={formData.name}
               onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
@@ -369,7 +364,6 @@ export default function App() {
             />
             <input
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)]"
-              name="email"
               placeholder="Your Email"
               type="email"
               value={formData.email}
@@ -378,7 +372,6 @@ export default function App() {
             />
             <textarea
               className="rounded-2xl border border-white/10 bg-[#0a0a1a]/80 p-3 text-white outline-none transition placeholder:text-[#a0a0c0]/70 focus:border-violet-300/60 focus:shadow-[0_0_22px_rgba(124,58,237,0.18)] md:col-span-2"
-              name="message"
               rows="4"
               placeholder="Message"
               value={formData.message}
