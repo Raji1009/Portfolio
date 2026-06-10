@@ -13,11 +13,13 @@ const fadeUp = {
 };
 
 const timelineSections = [
-  { label: 'Education', types: ['Education'], accent: 'from-violet-400 to-fuchsia-400' },
-  { label: 'Experience & Projects', types: ['Experience', 'Project'], accent: 'from-purple-400 to-indigo-400' },
-  { label: 'Achievements', types: ['Achievement'], accent: 'from-fuchsia-400 to-violet-400' },
-  { label: 'Certifications', types: ['Certification'], accent: 'from-indigo-400 to-purple-400' }
+  { id: 'education', label: 'Education', types: ['Education'], color: '#60a5fa' },
+  { id: 'projects', label: 'Experience & Projects', types: ['Experience', 'Project'], color: '#a78bfa' },
+  { id: 'achievements', label: 'Achievements', types: ['Achievement'], color: '#f472b6' },
+  { id: 'certifications', label: 'Certifications', types: ['Certification'], color: '#34d399' }
 ];
+
+const timelineTabs = [{ id: 'all', label: 'All', color: '#c4b5fd' }, ...timelineSections];
 
 export default function App() {
   const [githubLoading, setGithubLoading] = useState(true);
@@ -27,6 +29,7 @@ export default function App() {
   const [repoTotals, setRepoTotals] = useState({ stars: 0, forks: 0 });
   const [githubContributions, setGithubContributions] = useState('--');
   const [recentCommits, setRecentCommits] = useState('--');
+  const [activeTimelineTab, setActiveTimelineTab] = useState('all');
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   useEffect(() => {
@@ -131,6 +134,20 @@ export default function App() {
     () => 'https://streak-stats.demolab.com?user=Raji1009&theme=midnight-purple&hide_border=true&background=0D0D2B&ring=A855F7&fire=7C3AED&currStreakLabel=A0A0C0',
     []
   );
+
+  const visibleTimelineSections = useMemo(() => {
+    const sectionsToShow =
+      activeTimelineTab === 'all'
+        ? timelineSections
+        : timelineSections.filter((section) => section.id === activeTimelineTab);
+
+    return sectionsToShow
+      .map((section) => ({
+        ...section,
+        items: timeline.filter((item) => section.types.includes(item.type))
+      }))
+      .filter((section) => section.items.length > 0);
+  }, [activeTimelineTab]);
 
   const handleContactSubmit = (event) => {
     event.preventDefault();
@@ -323,28 +340,63 @@ export default function App() {
           <div className="section-heading">
             <h2>Timeline</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {timeline.map((item, index) => (
-              <motion.article
-                key={item.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.45, delay: index * 0.04 }}
-                className="glass-card group relative overflow-hidden rounded-3xl p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_0_34px_rgba(124,58,237,0.25)]"
-              >
-                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-violet-500/10 blur-xl" />
-                <div className="relative flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-300/30 bg-violet-500/15 text-sm font-bold text-violet-200 shadow-[0_0_24px_rgba(124,58,237,0.28)]">
-                    {item.type.slice(0, 2)}
-                  </span>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.22em] text-violet-300">{item.type}</p>
-                    <h3 className="mt-2 font-semibold text-white">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-[#a0a0c0]">{item.detail}</p>
-                  </div>
+
+          <div className="mb-6 flex flex-wrap gap-3" role="tablist" aria-label="Timeline categories">
+            {timelineTabs.map((tab) => {
+              const isActive = activeTimelineTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveTimelineTab(tab.id)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition duration-200 ${
+                    isActive
+                      ? 'border-white/20 bg-white/12 text-white shadow-[0_0_26px_rgba(124,58,237,0.2)]'
+                      : 'border-white/10 bg-white/[0.04] text-[#a0a0c0] hover:border-white/20 hover:bg-white/[0.07] hover:text-white'
+                  }`}
+                >
+                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: tab.color }} />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="space-y-6">
+            {visibleTimelineSections.map((section, sectionIndex) => (
+              <div key={section.id} className="space-y-3">
+                {activeTimelineTab === 'all' && (
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#a0a0c0]">
+                    {section.label}
+                  </p>
+                )}
+
+                <div className="grid gap-3 md:grid-cols-2">
+                  {section.items.map((item, itemIndex) => (
+                    <motion.article
+                      key={`${section.id}-${item.title}`}
+                      initial={{ opacity: 0, y: 18 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{ duration: 0.4, delay: (sectionIndex + itemIndex) * 0.03 }}
+                      className="glass-card relative overflow-hidden rounded-2xl border-l-4 p-4 transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_0_28px_rgba(124,58,237,0.18)]"
+                      style={{ borderLeftColor: section.color }}
+                    >
+                      <div className="absolute right-0 top-0 h-20 w-20 rounded-bl-full opacity-20 blur-xl" style={{ backgroundColor: section.color }} />
+                      <div className="relative">
+                        <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#a0a0c0]">
+                          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: section.color }} />
+                          {item.type}
+                        </div>
+                        <h3 className="font-semibold text-white">{item.title}</h3>
+                        <p className="mt-2 truncate text-sm text-[#a0a0c0]">{item.detail}</p>
+                      </div>
+                    </motion.article>
+                  ))}
                 </div>
-              </motion.article>
+              </div>
             ))}
           </div>
         </motion.section>
