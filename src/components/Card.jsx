@@ -1,8 +1,8 @@
 export default function Card({ title, children, className = '' }) {
   return (
-    <article className={`rounded-2xl border border-slate-800/90 bg-slate-900/70 p-5 shadow-glow ${className}`}>
-      {title && <h3 className="text-lg font-semibold text-slate-100">{title}</h3>}
-      <div className="mt-3 text-slate-300">{children}</div>
+    <article className={`glass-card rounded-3xl p-5 ${className}`}>
+      {title && <h3 className="text-lg font-semibold text-white">{title}</h3>}
+      <div className="mt-3 text-[#a0a0c0]">{children}</div>
     </article>
   );
 }
