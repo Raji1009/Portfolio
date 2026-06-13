@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Card from './components/Card';
 import StatsCard from './components/StatsCard';
@@ -20,6 +20,133 @@ const timelineSections = [
 ];
 
 const timelineTabs = [{ id: 'all', label: 'All', color: '#c4b5fd' }, ...timelineSections];
+
+// ── skill card accent colors ─────────────────────────────────────────────────
+const skillColors = {
+  Frontend:                '#7C6FCD',
+  Backend:                 '#5DCAA5',
+  Database:                '#85B7EB',
+  'Programming Languages': '#FAC775',
+  'DSA & Problem Solving': '#F09995',
+  'IoT & Emerging Technologies': '#9FE1CB',
+  'Tools & Platforms':     '#AFA9EC',
+};
+
+const PREVIEW_COUNT = 2;
+
+// ── SkillCard ────────────────────────────────────────────────────────────────
+function SkillCard({ title, items }) {
+  const [hovered, setHovered] = useState(false);
+  const color = skillColors[title] ?? '#a0a0c0';
+  const preview = items.slice(0, PREVIEW_COUNT);
+  const rest    = items.slice(PREVIEW_COUNT);
+
+  return (
+    <motion.div
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      animate={{
+        scale: hovered ? 1.03 : 1,
+        boxShadow: hovered
+          ? `0 0 0 1.5px ${color}55, 0 8px 32px ${color}22`
+          : '0 0 0 1px rgba(255,255,255,0.07)',
+      }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
+      className="relative cursor-default overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d2b] p-5"
+    >
+      {/* Glow blob */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            key="glow"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: `radial-gradient(circle at 20% 20%, ${color}1A 0%, transparent 68%)`,
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Header */}
+      <div className="mb-4 flex items-center gap-2">
+        <span
+          className="h-2.5 w-2.5 rounded-full"
+          style={{ backgroundColor: color }}
+        />
+        <h3 className="font-semibold text-white">{title}</h3>
+      </div>
+
+      {/* Preview pills — always visible */}
+      <ul className="space-y-2">
+        {preview.map((item) => (
+          <li
+            key={item}
+            className="rounded-xl px-3 py-2 text-sm"
+            style={{
+              border: `1px solid ${color}33`,
+              backgroundColor: `${color}0D`,
+              color: '#a0a0c0',
+            }}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      {/* Expanded pills */}
+      <AnimatePresence>
+        {hovered && rest.length > 0 && (
+          <motion.ul
+            key="rest"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="mt-2 space-y-2 overflow-hidden"
+          >
+            {rest.map((item, i) => (
+              <motion.li
+                key={item}
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.18, delay: i * 0.04 }}
+                className="rounded-xl px-3 py-2 text-sm"
+                style={{
+                  border: `1px solid ${color}33`,
+                  backgroundColor: `${color}0D`,
+                  color: '#a0a0c0',
+                }}
+              >
+                {item}
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
+      {/* Hint when collapsed */}
+      <AnimatePresence>
+        {!hovered && rest.length > 0 && (
+          <motion.p
+            key="hint"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="mt-3 text-xs"
+            style={{ color: `${color}99` }}
+          >
+            +{rest.length} more · hover to expand
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 export default function App() {
   const [githubLoading, setGithubLoading] = useState(true);
@@ -165,6 +292,8 @@ export default function App() {
       <Navbar />
 
       <main id="home" className="relative mx-auto flex w-[min(1180px,92vw)] flex-col gap-16 py-10 md:gap-20">
+
+        {/* ── Hero ── */}
         <motion.section
           {...fadeUp}
           className="relative isolate overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d0d2b]/80 px-6 py-12 shadow-[0_30px_90px_rgba(0,0,0,0.35)] md:px-10 md:py-16"
@@ -182,16 +311,10 @@ export default function App() {
               </p>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-[#a0a0c0]">{profile.intro}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#projects"
-                  className="rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7] px-5 py-3 text-sm font-semibold text-white shadow-[0_0_34px_rgba(124,58,237,0.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(168,85,247,0.52)]"
-                >
+                <a href="#projects" className="rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7] px-5 py-3 text-sm font-semibold text-white shadow-[0_0_34px_rgba(124,58,237,0.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(168,85,247,0.52)]">
                   View Projects
                 </a>
-                <a
-                  href="#contact"
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:border-violet-300/50 hover:bg-violet-500/10"
-                >
+                <a href="#contact" className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:border-violet-300/50 hover:bg-violet-500/10">
                   Contact
                 </a>
                 <a href="https://github.com/Raji1009" target="_blank" rel="noreferrer" className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/10">GitHub</a>
@@ -211,6 +334,7 @@ export default function App() {
           </div>
         </motion.section>
 
+        {/* ── About ── */}
         <motion.section id="about" {...fadeUp} className="section-shell bg-[#10102e]">
           <div className="section-heading">
             <h2>About</h2>
@@ -222,44 +346,54 @@ export default function App() {
           </Card>
         </motion.section>
 
+        {/* ── Skills ── CHANGED SECTION ── */}
         <motion.section id="skills" {...fadeUp} className="section-shell bg-[#0d0d2b]">
           <div className="section-heading">
             <h2>Skills</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {skills.map((skill) => (
-              <Card key={skill.title} title={skill.title}>
-                <ul className="space-y-2">
-                  {skill.items.map((item) => (
-                    <li key={item} className="rounded-xl border border-white/10 bg-[#0a0a1a]/70 px-3 py-2 text-sm text-[#a0a0c0]">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
+              <SkillCard
+                key={skill.title}
+                title={skill.title}
+                items={skill.items}
+              />
             ))}
           </div>
         </motion.section>
 
+        {/* ── Projects ── */}
         <motion.section id="projects" {...fadeUp} className="section-shell bg-[#10102e]">
           <div className="section-heading">
             <h2>Featured Projects</h2>
           </div>
           <div className="space-y-8">
             {projects.map((project, index) => (
-              <article key={project.title} className={`glass-card overflow-hidden rounded-[1.75rem] p-5 md:p-7 ${index % 2 === 1 ? 'lg:[&>div]:flex-row-reverse' : ''}`}>
+              <article
+                key={project.title}
+                className={`glass-card overflow-hidden rounded-[1.75rem] p-5 md:p-7 ${
+                  index % 2 === 1 ? 'lg:[&>div]:flex-row-reverse' : ''
+                }`}
+              >
                 <div className="flex flex-col items-center gap-8 lg:flex-row">
-                  <div className="w-full lg:w-1/2">
+                  <div className="w-full lg:w-3/5">
                     <div className="project-mockup relative rounded-2xl border border-violet-300/20 bg-[#0a0a1a] p-3 shadow-[0_28px_70px_rgba(0,0,0,0.42)]">
                       <div className="mb-3 flex gap-2">
                         <span className="h-3 w-3 rounded-full bg-[#a855f7]" />
                         <span className="h-3 w-3 rounded-full bg-[#7c3aed]" />
                         <span className="h-3 w-3 rounded-full bg-white/25" />
                       </div>
-                      <img src={project.image} alt={project.title} loading="lazy" className="h-64 w-full rounded-xl object-cover md:h-80" />
+                      <div className="aspect-[680/360] overflow-hidden rounded-xl">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="w-full lg:w-1/2">
+                  <div className="w-full lg:w-2/5">
                     <h3 className="text-2xl font-bold text-white md:text-3xl">{project.title}</h3>
                     <p className="mt-4 leading-7 text-[#a0a0c0]">{project.description}</p>
                     <div className="mt-5 flex flex-wrap gap-2">
@@ -280,6 +414,7 @@ export default function App() {
           </div>
         </motion.section>
 
+        {/* ── Stats ── */}
         <motion.section id="stats" {...fadeUp} className="section-shell bg-[#0d0d2b]">
           <div className="section-heading">
             <h2>Stats</h2>
@@ -314,21 +449,65 @@ export default function App() {
             <Card title="LeetCode Stats">
               {leetLoading ? (
                 <div className="grid gap-3 sm:grid-cols-2">
-                  {[...Array(4)].map((_, idx) => (
-                    <div key={idx} className="h-20 animate-pulse rounded-xl bg-white/[0.05]" />
+                  {[...Array(5)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="h-20 animate-pulse rounded-xl bg-white/[0.05]"
+                    />
                   ))}
                 </div>
               ) : (
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <StatsCard label="Total Solved" value={leetStats?.totalSolved ?? '--'} />
-                  <StatsCard label="Easy / Medium / Hard" value={`${leetStats?.easySolved ?? '--'} / ${leetStats?.mediumSolved ?? '--'} / ${leetStats?.hardSolved ?? '--'}`} />
-                  <StatsCard label="Acceptance Rate" value={leetStats?.acceptanceRate ? `${leetStats.acceptanceRate}%` : '--'} />
-                  <StatsCard label="Global Ranking" value={leetStats?.ranking ?? '--'} />
-                  <StatsCard label="Contribution Points" value={leetStats?.contributionPoints ?? '--'} />
-                </div>
+                <>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <StatsCard
+                      label="Total Solved"
+                      value={leetStats?.totalSolved ?? "--"}
+                    />
+
+                    <StatsCard
+                      label="Easy / Medium / Hard"
+                      value={`${leetStats?.easySolved ?? "--"} / ${
+                        leetStats?.mediumSolved ?? "--"
+                      } / ${leetStats?.hardSolved ?? "--"}`}
+                    />
+
+                    <StatsCard
+                      label="Acceptance Rate"
+                      value={
+                        leetStats?.acceptanceRate
+                          ? `${leetStats.acceptanceRate}%`
+                          : "--"
+                      }
+                    />
+
+                    <StatsCard
+                      label="Global Ranking"
+                      value={leetStats?.ranking ?? "--"}
+                    />
+
+                    <StatsCard
+                      label="Contribution Points"
+                      value={leetStats?.contributionPoints ?? "--"}
+                    />
+                  </div>
+
+                  <div className="mt-6 overflow-hidden rounded-xl border border-white/10">
+                    <img
+                      src="https://leetcard.jacoblin.cool/Rajalakshmi_10?theme=transparent&font=Spectral&colors=Background%3A%20%23171738%20Border%3A%20%20%20%20%20%232E2A5E%20Title%3A%20%20%20%20%20%20%23FFFFFF%20Accent%3A%20%20%20%20%20%238B5CF6%20Text%3A%20%20%20%20%20%20%20%23B4B0D3&ext=heatmap"
+                      alt="LeetCode Heatmap"
+                      className="w-full"
+                    />
+                  </div>
+                </>
               )}
+
               <div className="mt-4">
-                <a href="https://leetcode.com/Rajalakshmi_10/" target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-violet-400/40 px-4 py-2 text-sm text-violet-200 hover:bg-violet-500/10">
+                <a
+                  href="https://leetcode.com/Rajalakshmi_10/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-full border border-violet-400/40 px-4 py-2 text-sm text-violet-200 hover:bg-violet-500/10"
+                >
                   Open LeetCode Profile
                 </a>
               </div>
@@ -336,11 +515,11 @@ export default function App() {
           </div>
         </motion.section>
 
+        {/* ── Timeline ── */}
         <motion.section id="timeline" {...fadeUp} className="section-shell bg-[#10102e]">
           <div className="section-heading">
             <h2>Build History</h2>
           </div>
-
           <div className="mb-6 flex flex-wrap gap-3" role="tablist" aria-label="Timeline categories">
             {timelineTabs.map((tab) => {
               const isActive = activeTimelineTab === tab.id;
@@ -363,7 +542,6 @@ export default function App() {
               );
             })}
           </div>
-
           <div className="space-y-6">
             {visibleTimelineSections.map((section, sectionIndex) => (
               <div key={section.id} className="space-y-3">
@@ -372,7 +550,6 @@ export default function App() {
                     {section.label}
                   </p>
                 )}
-
                 <div className="grid gap-3 md:grid-cols-2">
                   {section.items.map((item, itemIndex) => (
                     <motion.article
@@ -401,6 +578,7 @@ export default function App() {
           </div>
         </motion.section>
 
+        {/* ── Contact ── */}
         <motion.section id="contact" {...fadeUp} className="section-shell relative overflow-hidden bg-[#0d0d2b]">
           <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/70 to-transparent" />
           <div className="section-heading">
@@ -439,6 +617,7 @@ export default function App() {
             <a href="https://www.linkedin.com/in/Rajalakshmir10" target="_blank" rel="noreferrer" className="text-[#a855f7] hover:text-white">LinkedIn</a>
           </div>
         </motion.section>
+
       </main>
     </div>
   );

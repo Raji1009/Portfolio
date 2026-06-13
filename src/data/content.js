@@ -84,8 +84,7 @@ export const projects = [
     description: 'Analytics platform for evaluating sustainability scores and risk indicators.',
     github: 'https://github.com/Raji1009/ESG-Scoring-App',
     demo: 'https://esg-scoring-app.onrender.com/',
-    image:
-      'https://images.unsplash.com/photo-1551281044-8a4f6f4be5dc?auto=format&fit=crop&w=900&q=80'
+    image: '/esgscoring.png'
   },
   {
     title: 'Smart Expense Tracker',
@@ -93,8 +92,7 @@ export const projects = [
     description: 'Tracks and predicts spending patterns with actionable budgeting insights.',
     github: 'https://github.com/Raji1009/Smart-Expense-Tracker',
     demo: 'https://raji1009.github.io/Smart-Expense-Tracker/',
-    image:
-      'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=80'
+    image: '/smartexpense.png'
   },
   {
     title: 'Spotify Clone',
