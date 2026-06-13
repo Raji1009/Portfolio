@@ -76,8 +76,7 @@ export const projects = [
     description: 'Real-time stress monitoring system that combines sensor signals and intelligent health analytics.',
     github: 'https://github.com/Raji1009/Swaas',
     demo: 'https://swaasband.vercel.app/#/',
-    image:
-      '/workspaces/Portfolio/swaasphoto.png'
+    image:'/swaasphoto.png'
   },
   {
     title: 'ESG Scoring Platform',
