@@ -9,16 +9,63 @@ export const profile = {
 
 export const skills = [
   {
-    title: 'Frontend',
-    items: ['HTML', 'CSS', 'JavaScript', 'React']
+    title: "Frontend",
+    items: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Responsive Design"
+    ]
   },
   {
-    title: 'Backend (Basic)',
-    items: ['Node.js', 'Express.js']
+    title: "Backend",
+    items: [
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "EJS"
+    ]
   },
   {
-    title: 'DSA',
-    items: ['Java', 'Problem Solving']
+    title: "Database",
+    items: [
+      "MongoDB",
+      "SQL",
+      "MySQL"
+    ]
+  },
+  {
+    title: "Programming Languages",
+    items: [
+      "Java",
+      "C",
+      "JavaScript"
+    ]
+  },
+  {
+    title: "DSA & Problem Solving",
+    items: [
+      "Data Structures",
+      "Algorithms",
+      "LeetCode",
+      "Problem Solving"
+    ]
+  },
+  {
+    title: "IoT & Emerging Technologies",
+    items: [
+      "Internet of Things (IoT)",
+      "Artificial Intelligence (AI)"
+    ]
+  },
+  {
+    title: "Tools & Platforms",
+    items: [
+      "Git",
+      "GitHub",
+      "VS Code"
+    ]
   }
 ];
 
@@ -30,13 +77,13 @@ export const projects = [
     github: 'https://github.com/Raji1009/Swaas',
     demo: 'https://swaasband.vercel.app/#/',
     image:
-      'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80'
+      '/workspaces/Portfolio/swaasphoto.png'
   },
   {
     title: 'ESG Scoring Platform',
     stack: ['Python', 'ML', 'Dashboard UI'],
     description: 'Analytics platform for evaluating sustainability scores and risk indicators.',
-    github: 'https://github.com/Raji1009/ESG-Scoring-App/tree/codex/find-deployment-options-for-app',
+    github: 'https://github.com/Raji1009/ESG-Scoring-App',
     demo: 'https://esg-scoring-app.onrender.com/',
     image:
       'https://images.unsplash.com/photo-1551281044-8a4f6f4be5dc?auto=format&fit=crop&w=900&q=80'
@@ -60,41 +107,50 @@ export const projects = [
       'https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&w=900&q=80'
   }
 ];
-
 export const timeline = [
   {
     type: 'Education',
-    title: 'B.E. (3rd Year – CSE IoT)',
-    detail: 'Focused on full-stack development, DSA, and real-world system building.'
+    title: 'SSVM World School, Coimbatore',
+    detail: 'Completed higher secondary education with 90% in Class XII, building a strong academic foundation.'
+  },
+  {
+    type: 'Education',
+    title: 'B.E. Computer Science and Engineering (IoT)',
+    detail: 'Currently pursuing engineering at Saveetha Engineering College, Chennai, focusing on Full-Stack Development, DSA, IoT, and AI.'
+  },
+  {
+    type: 'Experience',
+    title: 'IoT Intern – Enthu Technology Solutions',
+    detail: 'Worked on real-time IoT-based monitoring systems using sensor data and algorithm techniques.'
+  },
+  {
+    type: 'Experience',
+    title: 'ML Intern – Empiezo IT Solutions',
+    detail: 'Worked on real-time disease detection and IoT-based monitoring systems using sensor data, machine learning, and data analysis techniques.'
   },
   {
     type: 'Project',
     title: 'Swaas – Smart Health Band',
-    detail: 'Built a real-time stress monitoring system using rPPG, FastAPI, and React.'
+    detail: 'Built a real-time stress monitoring system using rPPG, FastAPI, and React for continuous health tracking.'
+  },
+  {
+    type: 'Achievement',
+    title: 'Winner – Hexaware AI Innovation League (HAIL) 2026',
+    detail: 'Secured 1st Place in HAIL 2026, organized by :contentReference[oaicite:0]{index=0}, for developing an innovative AI-powered solution and demonstrating technical excellence.'
   },
   {
     type: 'Achievement',
     title: 'Smart India Hackathon (SIH) – College Level Shortlisted',
-    detail: 'Selected among top teams for innovative problem-solving and project evaluation.'
+    detail: 'Selected among the top teams for innovative problem-solving, technical implementation, and project evaluation.'
   },
   {
     type: 'Certification',
-    title: 'AWS Cloud Solutions Architect Professional',
-    detail: 'Developed skills in designing scalable and secure cloud architectures.'
-  },
-  {
-    type: 'Certification',
-    title: 'Industrial Internet of Things – University of Michigan',
-    detail: 'Learned real-world IoT systems and industrial applications.'
+    title: 'Industrial Internet of Things',
+    detail: 'Completed the course offered by :contentReference[oaicite:1]{index=1}, gaining knowledge of industrial IoT systems and real-world applications.'
   },
   {
     type: 'Certification',
     title: 'Cloud Computing – NPTEL',
-    detail: 'Gained foundational knowledge of cloud models and deployment strategies.'
-  },
-  {
-    type: 'Experience',
-    title: 'ML & IoT Intern',
-    detail: 'Worked on real-time disease detection using sensor data and ML techniques.'
+    detail: 'Learned cloud service models, virtualization, deployment strategies, and cloud infrastructure fundamentals.'
   }
 ];

@@ -155,7 +155,7 @@ export default function App() {
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    window.location.href = `mailto:lavanis7u@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:irajalakshmirajaram@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -338,7 +338,7 @@ export default function App() {
 
         <motion.section id="timeline" {...fadeUp} className="section-shell bg-[#10102e]">
           <div className="section-heading">
-            <h2>Timeline</h2>
+            <h2>Build History</h2>
           </div>
 
           <div className="mb-6 flex flex-wrap gap-3" role="tablist" aria-label="Timeline categories">

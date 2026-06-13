@@ -1,5 +1,5 @@
 export default function Navbar() {
-  const navItems = ['about', 'skills', 'projects', 'stats', 'timeline', 'contact'];
+  const navItems = ['about', 'skills', 'projects', 'stats', 'Build History', 'contact'];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a1a]/65 backdrop-blur-xl">
@@ -21,7 +21,7 @@ export default function Navbar() {
         </nav>
 
         <a
-          href="/resume.pdf"
+          href="./resume.pdf"
           download
           className="rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-200 shadow-[0_0_22px_rgba(124,58,237,0.24)] transition hover:border-violet-300 hover:bg-violet-500/20"
         >
