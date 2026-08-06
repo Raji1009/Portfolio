@@ -379,8 +379,9 @@ export default function App() {
             <h2>About</h2>
           </div>
           <Card>
+            <p>{profile.about}</p>
             <p className="mt-3 text-[#a0a0c0]">Final-year engineering student passionate about crafting clean, performant web experiences.</p>
-              <span className="mt-3 text-[#a0a0c0]">Sharpening my problem-solving through DSA while shipping real-world projects — actively seeking opportunities to contribute from day one.</span>
+            <p className="mt-1 text-[#a0a0c0]">Sharpening my problem-solving through DSA while shipping real-world projects — actively seeking opportunities to contribute from day one.</p>
           </Card>
         </motion.section>
 
@@ -606,7 +607,7 @@ export default function App() {
                           {item.type}
                         </div>
                         <h3 className="font-semibold text-white">{item.title}</h3>
-                        <p className="mt-2 truncate text-sm text-[#a0a0c0]">{item.detail}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-[#a0a0c0]">{item.detail}</p>
                       </div>
                     </motion.article>
                   ))}
