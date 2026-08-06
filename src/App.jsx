@@ -174,7 +174,26 @@ export default function App() {
     };
 
     const getStats = async () => {
+      // ── GitHub stats cache (avoids hammering the 60/hr unauthenticated
+      // api.github.com rate limit on every page reload during dev/testing) ──
+      const GITHUB_CACHE_KEY = 'github-stats-cache';
+      const GITHUB_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
       try {
+        const cachedRaw = sessionStorage.getItem(GITHUB_CACHE_KEY);
+        if (cachedRaw) {
+          const cached = JSON.parse(cachedRaw);
+          if (cached && Date.now() - cached.timestamp < GITHUB_CACHE_TTL) {
+            setGithubStats(cached.data.githubStats);
+            setRepoTotals(cached.data.repoTotals);
+            setRecentCommits(cached.data.recentCommits);
+            setGithubContributions(cached.data.githubContributions);
+            setGithubLoading(false);
+            // Skip straight to the LeetCode block below.
+            throw { __skipGithubFetch: true };
+          }
+        }
+
         const parseJson = async (response) => {
           if (!response?.ok) return null;
           const data = await response.json();
@@ -195,24 +214,44 @@ export default function App() {
 
         setGithubStats(githubData);
 
+        let stars = 0;
+        let forks = 0;
         if (Array.isArray(reposData)) {
-          const stars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-          const forks = reposData.reduce((sum, repo) => sum + (repo.forks_count || 0), 0);
+          stars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+          forks = reposData.reduce((sum, repo) => sum + (repo.forks_count || 0), 0);
           setRepoTotals({ stars, forks });
         }
 
+        let commitCount = '--';
         if (Array.isArray(eventsData)) {
           const pushEvents = eventsData.filter((event) => event.type === 'PushEvent');
-          const commitCount = pushEvents.reduce((sum, event) => sum + (event.payload?.commits?.length || 0), 0);
+          commitCount = pushEvents.reduce((sum, event) => sum + (event.payload?.commits?.length || 0), 0);
           setRecentCommits(commitCount);
         }
 
+        let contributionTotal = '--';
         if (contributionData?.total) {
-          const contributionTotal = Object.values(contributionData.total).reduce((sum, value) => sum + Number(value || 0), 0);
-          setGithubContributions(contributionTotal || '--');
+          contributionTotal = Object.values(contributionData.total).reduce((sum, value) => sum + Number(value || 0), 0) || '--';
+          setGithubContributions(contributionTotal);
         }
-      } catch {
-        setGithubStats(null);
+
+        // Cache whatever we got (even partial) so reloads don't re-hit the API.
+        sessionStorage.setItem(
+          GITHUB_CACHE_KEY,
+          JSON.stringify({
+            data: {
+              githubStats: githubData,
+              repoTotals: { stars, forks },
+              recentCommits: commitCount,
+              githubContributions: contributionTotal
+            },
+            timestamp: Date.now()
+          })
+        );
+      } catch (err) {
+        if (!err?.__skipGithubFetch) {
+          setGithubStats(null);
+        }
       } finally {
         setGithubLoading(false);
       }
@@ -253,7 +292,7 @@ export default function App() {
 
   const githubApiImage = useMemo(
     () =>
-      'https://github-readme-stats.vercel.app/api?username=Raji1009&show_icons=true&theme=midnight-purple&hide_border=true&bg_color=0d0d2b&title_color=a855f7&text_color=a0a0c0&icon_color=7c3aed',
+      'https://github-stats-extended.vercel.app/api?username=Raji1009&show_icons=true&theme=midnight-purple&hide_border=true&bg_color=0d0d2b&title_color=a855f7&text_color=a0a0c0&icon_color=7c3aed',
     []
   );
 
