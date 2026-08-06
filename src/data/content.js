@@ -4,7 +4,7 @@ export const profile = {
   intro:
     'I build clean and performant web interfaces, while steadily growing in full-stack engineering and interview-level problem solving.',
   about:
-    'I am a 3rd year engineering student, placement-focused, with strong commitment to DSA, frontend craftsmanship, and practical backend learning.'
+    'Final-year engineering student passionate about crafting clean, performant web experiences.Sharpening my problem-solving through DSA while shipping real-world projects — actively seeking opportunities to contribute from day one.'
 };
 
 export const skills = [
@@ -102,6 +102,14 @@ export const projects = [
     demo: 'https://raji1009.github.io/Spotify_clone/',
     image:
       'https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    title: 'Simon Says Game',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    description: 'A colorful memory game where players repeat an increasingly long color-and-sound sequence, built with vanilla JavaScript and DOM manipulation.',
+    github: 'https://github.com/Raji1009/Simon-Game',
+    demo: 'https://raji1009.github.io/Simon-Game/',
+    image: '/simonsays.png'
   }
 ];
 export const timeline = [
@@ -133,7 +141,7 @@ export const timeline = [
   {
     type: 'Achievement',
     title: 'Winner – Hexaware AI Innovation League (HAIL) 2026',
-    detail: 'Secured 1st Place in HAIL 2026, organized by :contentReference[oaicite:0]{index=0}, for developing an innovative AI-powered solution and demonstrating technical excellence.'
+    detail: 'Secured 1st Place in HAIL 2026, organized by :Hexaware Technologies, for developing an innovative AI-powered solution and demonstrating technical excellence.'
   },
   {
     type: 'Achievement',
@@ -141,9 +149,14 @@ export const timeline = [
     detail: 'Selected among the top teams for innovative problem-solving, technical implementation, and project evaluation.'
   },
   {
+    type: 'Achievement',
+    title: 'Google Student Ambassador',
+    detail: 'Selected to represent Google on campus, driving student engagement through tech talks, workshops, and community-led initiatives on GEMINI.'
+  },
+  {
     type: 'Certification',
     title: 'Industrial Internet of Things',
-    detail: 'Completed the course offered by :contentReference[oaicite:1]{index=1}, gaining knowledge of industrial IoT systems and real-world applications.'
+    detail: 'Completed the course offered by :, gaining knowledge of industrial IoT systems and real-world applications.'
   },
   {
     type: 'Certification',

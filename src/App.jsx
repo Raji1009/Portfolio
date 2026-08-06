@@ -379,9 +379,8 @@ export default function App() {
             <h2>About</h2>
           </div>
           <Card>
-            <p>{profile.about}</p>
-            <p className="mt-3 text-[#a0a0c0]">Education: 3rd year engineering student.</p>
-            <p className="mt-1 text-[#a0a0c0]">Goal: secure placements through strong DSA + development execution.</p>
+            <p className="mt-3 text-[#a0a0c0]">Final-year engineering student passionate about crafting clean, performant web experiences.</p>
+              <span className="mt-3 text-[#a0a0c0]">Sharpening my problem-solving through DSA while shipping real-world projects — actively seeking opportunities to contribute from day one.</span>
           </Card>
         </motion.section>
 
