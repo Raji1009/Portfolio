@@ -75,7 +75,7 @@ export const projects = [
     stack: ['rPPG', 'FastAPI', 'React', 'IoT', 'ML'],
     description: 'Real-time stress monitoring system that combines sensor signals and intelligent health analytics.',
     github: 'https://github.com/Raji1009/Swaas',
-    demo: 'https://swaasband.vercel.app/#/',
+    demo: 'https://swaas-two.vercel.app/#/',
     image:'/swaasphoto.png'
   },
   {
